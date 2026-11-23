@@ -26,7 +26,8 @@ import {
   Key,
   LineChart,
   PlayCircle,
-  Rocket
+  Rocket,
+  Scale
 } from 'lucide-react';
 import Preloader from './components/Preloader';
 import SectionParticles from './components/Particles';
@@ -194,6 +195,27 @@ const App = () => {
       link: "https://www.salesforge.ai/",
       tags: ["SaaS", "Faceless", "Education"],
       metric: { value: "24/7", label: "Always-on content pipeline" }
+    },
+    {
+      featured: true,
+      mark: "TUNA",
+      category: "Automotive · Faceless Channel",
+      title: "Tuna No Crust: A Faceless Channel Worth $333K+",
+      role: "Faceless Storytelling Engine",
+      results: ["56M organic views and 136K+ subscribers", "$333K+ in channel revenue", "Story-led scripts built for retention, packaging tested for CTR"],
+      link: null,
+      tags: ["Faceless", "Storytelling", "Revenue"],
+      metric: { value: "56M", label: "Organic views" }
+    },
+    {
+      mark: "LAW",
+      category: "Law & Tax Firms · Professional Services",
+      title: "Expert Explainer Channels That Bring In Consultations",
+      role: "Brenton C. McWilliams Law · R&D Tax Advisors",
+      results: ["Search-led legal and tax topics", "The attorney records, we handle everything else", "A dependable weekly publishing pipeline"],
+      link: "https://www.youtube.com/@thelawofficesofbrentonc.mc787",
+      tags: ["Legal", "Tax", "Education"],
+      metric: { value: "500+", label: "Explainer videos produced" }
     }
   ];
 
@@ -249,7 +271,7 @@ const App = () => {
   ];
 
   const fitYes = [
-    'Product brand doing $1M–$20M in annual revenue',
+    'Product brand doing $1M–$20M in annual revenue, or an expert-led firm with high-value clients',
     'AOV over $60 or customer LTV over $150',
     'Education-heavy purchase where customers research before buying',
     'Founder or CMO who already believes in content. We screen, we never evangelize',
@@ -392,7 +414,7 @@ const App = () => {
 
             <Reveal delay={250} variant="fade-up">
               <div className="mb-11">
-                <div className={`text-[10px] font-bold uppercase tracking-[0.3em] mb-4 ${isDark ? 'text-neutral-600' : 'text-neutral-500'}`}>For Product Brands $1M–$20M</div>
+                <div className={`text-[10px] font-bold uppercase tracking-[0.3em] mb-4 ${isDark ? 'text-neutral-600' : 'text-neutral-500'}`}>For Product Brands $1M–$20M & Expert-Led Firms</div>
                 <div className="flex flex-wrap justify-center gap-2">
                   {[
                     { icon: <ShoppingCart size={13} />, label: 'Ecommerce' },
@@ -400,6 +422,7 @@ const App = () => {
                     { icon: <Coins size={13} />, label: 'Finance' },
                     { icon: <Cloud size={13} />, label: 'B2B SaaS' },
                     { icon: <Building2 size={13} />, label: 'Real Estate' },
+                    { icon: <Scale size={13} />, label: 'Law & Professional Services' },
                   ].map((n, i) => (
                     <span key={i} className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border text-xs font-medium transition-all duration-300 hover:-translate-y-0.5 cursor-default ${isDark ? 'border-white/10 bg-white/[0.03] text-neutral-300 hover:border-blue-500/60 hover:text-blue-300' : 'border-black/10 bg-black/[0.02] text-neutral-700 hover:border-blue-500 hover:text-blue-700'}`}>
                       <span className={accentText}>{n.icon}</span> {n.label}
@@ -428,8 +451,8 @@ const App = () => {
               <div className={`mt-16 pt-10 border-t grid grid-cols-3 max-w-2xl mx-auto ${isDark ? 'border-white/10' : 'border-black/10'}`}>
                 {[
                   { end: 5.5, decimals: 1, prefix: '$', suffix: 'M', label: 'Client revenue scaled' },
-                  { end: 50, decimals: 0, prefix: '', suffix: 'M+', label: 'Organic views generated' },
-                  { end: 100, decimals: 0, prefix: '', suffix: 'K+', label: 'Subscribers built' },
+                  { end: 100, decimals: 0, prefix: '', suffix: 'M+', label: 'Organic views generated' },
+                  { end: 136, decimals: 0, prefix: '', suffix: 'K+', label: 'Subscribers on one channel' },
                 ].map((s, i) => (
                   <div key={i} className={`px-4 ${i > 0 ? (isDark ? 'border-l border-white/10' : 'border-l border-black/10') : ''}`}>
                     <div className={`w-5 h-0.5 mx-auto mb-3 ${isDark ? 'bg-yellow-400/80' : 'bg-yellow-500'}`}></div>
@@ -616,7 +639,7 @@ const App = () => {
               </div>
               <WordReveal as="h3" text="The Price of a Freelancer. The Standard of a Growth Agency." className="text-4xl md:text-5xl font-bold mb-6" stagger={45} />
               <p className={theme.textMuted}>
-                Full-stack agencies charge $10–30k/month for this scope. Freelancers can’t deliver it. We built our engine to close that gap. And beware anyone offering full service for under $1,500: that is the industry’s own red flag.
+                Full-stack agencies charge $10–30k/month for this scope. Freelancers can’t deliver it. We built our engine to close that gap. And be careful with anyone promising this full scope for under $1,500/month. That’s the industry’s own red flag.
               </p>
             </div>
           </Reveal>
@@ -627,8 +650,8 @@ const App = () => {
               <div className={`p-8 rounded-3xl border h-full flex flex-col transition-all duration-300 hover:-translate-y-2 spotlight-card ${theme.spotlightCard}`} onMouseMove={handleSpotlightMove}>
                 <div className={`text-xs font-black uppercase tracking-widest mb-2 ${accentText}`}>Step 1 · One-Time</div>
                 <h4 className={`text-2xl font-black mb-1 ${theme.text}`}>Strategy Sprint</h4>
-                <div className={`text-3xl font-black mb-6 ${theme.text}`}>$1,500<span className={`text-base font-bold ${theme.textMuted}`}>–$2,500</span></div>
-                <p className={`text-sm mb-6 ${theme.textMuted}`}>30 days. Everything needed before a single video ships.</p>
+                <div className={`text-3xl font-black mb-6 ${theme.text}`}>$1,950<span className={`text-base font-bold ${theme.textMuted}`}> one-time</span></div>
+                <p className={`text-sm mb-6 ${theme.textMuted}`}>30 days. Everything needed before a single video ships. <span className={`font-bold ${theme.text}`}>Credited in full against month 1 when you start a 6-month Engine plan.</span></p>
                 <ul className={`space-y-3 text-sm flex-grow ${theme.textMuted}`}>
                   {['Audience research & keyword demand map', 'Channel architecture', '90-day content calendar', 'Attribution stack install (UTM + promo codes + GA4 + surveys)'].map((item, i) => (
                     <li key={i} className="flex items-start gap-2">
@@ -645,7 +668,7 @@ const App = () => {
                 <div className="absolute top-0 right-0 bg-yellow-400 text-black text-[10px] font-black uppercase tracking-widest px-4 py-1.5 rounded-bl-xl">Most Popular</div>
                 <div className={`text-xs font-black uppercase tracking-widest mb-2 ${accentText}`}>Step 2 · Monthly</div>
                 <h4 className={`text-2xl font-black mb-1 ${theme.text}`}>Revenue Engine</h4>
-                <div className={`text-3xl font-black mb-6 ${theme.text}`}>$3,500<span className={`text-base font-bold ${theme.textMuted}`}>–$4,500/mo</span></div>
+                <div className={`text-3xl font-black mb-6 ${theme.text}`}><span className={`text-base font-bold ${theme.textMuted}`}>From </span>$3,500<span className={`text-base font-bold ${theme.textMuted}`}>/mo</span></div>
                 <p className={`text-sm mb-6 ${theme.textMuted}`}>The full engine, running every month.</p>
                 <ul className={`space-y-3 text-sm flex-grow ${theme.textMuted}`}>
                   {['4 long-form videos + 8 shorts monthly', 'Thumbnails, titles & YouTube SEO', 'Publishing & full channel management', 'Live leading-indicator dashboard', 'Monthly strategy call'].map((item, i) => (
@@ -662,7 +685,7 @@ const App = () => {
               <div className={`p-8 rounded-3xl border h-full flex flex-col transition-all duration-300 hover:-translate-y-2 spotlight-card ${theme.spotlightCard}`} onMouseMove={handleSpotlightMove}>
                 <div className={`text-xs font-black uppercase tracking-widest mb-2 ${accentText}`}>Scale · Monthly</div>
                 <h4 className={`text-2xl font-black mb-1 ${theme.text}`}>Growth Engine</h4>
-                <div className={`text-3xl font-black mb-6 ${theme.text}`}>$5,500<span className={`text-base font-bold ${theme.textMuted}`}>–$6,500/mo</span></div>
+                <div className={`text-3xl font-black mb-6 ${theme.text}`}><span className={`text-base font-bold ${theme.textMuted}`}>From </span>$5,500<span className={`text-base font-bold ${theme.textMuted}`}>/mo</span></div>
                 <p className={`text-sm mb-6 ${theme.textMuted}`}>Everything in Revenue Engine, plus:</p>
                 <ul className={`space-y-3 text-sm flex-grow ${theme.textMuted}`}>
                   {['Repurposing pack: LinkedIn, IG and TikTok cuts', 'Ad-creative versions of winning videos', 'Light YouTube Ads amplification', 'Priority production queue'].map((item, i) => (
@@ -678,14 +701,14 @@ const App = () => {
           <Reveal delay={300} variant="fade-up">
             <div className={`mt-10 max-w-4xl mx-auto p-6 rounded-3xl border text-center ${isDark ? 'border-blue-900/50 bg-blue-950/20' : 'border-blue-200 bg-blue-50'}`}>
               <p className={`text-sm ${theme.textMuted}`}>
-                <span className={`font-bold ${theme.text}`}>Skin in the game:</span> from month 4, a small performance fee applies only to <span className={`font-bold ${theme.text}`}>tracked, coded YouTube revenue</span>: capped, audited, and only when it works. We win when you win.
+                <span className={`font-bold ${theme.text}`}>Skin in the game:</span> from month 4, an optional performance fee on <span className={`font-bold ${theme.text}`}>tracked, coded YouTube revenue</span>. Capped, and only when it works. Details on the call.
               </p>
             </div>
           </Reveal>
 
           <Reveal delay={350} variant="fade-in">
             <p className={`mt-8 text-center text-xs ${isDark ? 'text-neutral-600' : 'text-neutral-500'}`}>
-              Not ready for the full engine? Ask about <span className="font-bold">Editing + Strategy Lite</span> from $1,200/mo.
+              Not ready for the full engine? <span className="font-bold">Editing + Strategy Lite from $1,200/mo</span>: editing plus a monthly content plan, without the full system.
             </p>
           </Reveal>
         </div>
@@ -754,7 +777,7 @@ const App = () => {
               </div>
               <WordReveal as="h3" text="This Only Works for the Right Brand" className="text-4xl md:text-5xl font-bold mb-6" stagger={50} />
               <p className={theme.textMuted}>
-                We take on a limited number of engine clients so every channel gets a senior team. Here’s the honest filter.
+                We take on a limited number of engine clients so every channel gets senior attention. Here’s the honest filter.
               </p>
             </div>
           </Reveal>
@@ -790,6 +813,29 @@ const App = () => {
               </div>
             </Reveal>
           </div>
+
+          {/* Services businesses */}
+          <Reveal delay={150} variant="fade-up">
+            <div id="services" className={`mt-10 max-w-5xl mx-auto p-8 md:p-10 rounded-3xl border ${isDark ? 'border-blue-900/50 bg-blue-950/20' : 'border-blue-200 bg-blue-50'}`}>
+              <div className="flex flex-col md:flex-row gap-8 items-start">
+                <div className={`w-14 h-14 rounded-2xl flex items-center justify-center shrink-0 ${theme.iconBg}`}>
+                  <Scale size={28} />
+                </div>
+                <div className="flex-grow">
+                  <h4 className={`text-2xl font-black mb-3 ${theme.text}`}>Also built for law firms and expert-led businesses</h4>
+                  <p className={`text-sm leading-relaxed mb-4 ${theme.textMuted}`}>
+                    Your clients search YouTube before they call anyone. We turn your expertise into a library of explainer videos that answers their questions, builds trust and sends consultations your way. You record once a month or send talking points, and we handle topics, editing, motion graphics, thumbnails, SEO and publishing.
+                  </p>
+                  <p className={`text-sm font-bold mb-6 ${theme.text}`}>
+                    500+ legal and tax videos produced for firms like Brenton C. McWilliams Law and R&D Tax Advisors.
+                  </p>
+                  <button onClick={() => scrollToSection('contact')} className={`btn-sheen inline-flex items-center gap-2 px-7 py-3 ${brandBlue} text-white font-bold rounded-full hover:bg-blue-500 transition-all duration-300 text-sm tracking-wide`}>
+                    Get Your Free Channel Audit <ArrowRight size={16} />
+                  </button>
+                </div>
+              </div>
+            </div>
+          </Reveal>
         </div>
       </section>
 
@@ -814,10 +860,10 @@ const App = () => {
             <div className="max-w-2xl mx-auto mb-10">
               <ul className="text-white/90 text-sm md:text-base space-y-3 text-left inline-block">
                 {[
-                  'What your competitors’ channels are earning them right now',
                   'The 20 keywords your buyers actually search on YouTube',
-                  'The first 5 videos your brand should make',
-                  'Your projected 12-month revenue curve'
+                  'Which competitor channels are winning your buyers’ attention, and why',
+                  'The search demand your brand is missing today',
+                  'The first 5 videos your brand should make'
                 ].map((item, i) => (
                   <li key={i} className="flex items-start gap-3">
                     <CheckCircle2 size={18} className="text-white mt-0.5 shrink-0" /> {item}
