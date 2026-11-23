@@ -27,7 +27,11 @@ import {
   LineChart,
   PlayCircle,
   Rocket,
-  Scale
+  Scale,
+  Star,
+  ChevronDown,
+  Phone,
+  Mic
 } from 'lucide-react';
 import Preloader from './components/Preloader';
 import SectionParticles from './components/Particles';
@@ -42,6 +46,7 @@ import CountUp from './components/CountUp';
 import Parallax from './components/Parallax';
 import ContactForm from './components/ContactForm';
 import FounderVideo from './components/FounderVideo';
+import VideoTile from './components/VideoTile';
 
 const App = () => {
   const [loading, setLoading] = useState(true);
@@ -124,7 +129,7 @@ const App = () => {
 
   useEffect(() => {
     if (loading) return;
-    const ids = ['home', 'work', 'engine', 'pricing', 'fit', 'contact'];
+    const ids = ['home', 'work', 'samples', 'testimonials', 'engine', 'how', 'pricing', 'fit', 'faq', 'contact'];
     const obs = new IntersectionObserver(
       (entries) => entries.forEach((e) => { if (e.isIntersecting) setActiveSection((e.target as HTMLElement).id); }),
       { rootMargin: '-45% 0px -50% 0px' }
@@ -151,6 +156,7 @@ const App = () => {
     { label: 'The System', id: 'engine' },
     { label: 'Pricing', id: 'pricing' },
     { label: 'Who It’s For', id: 'fit' },
+    { label: 'FAQ', id: 'faq' },
   ];
 
   const caseStudies = [
@@ -286,6 +292,49 @@ const App = () => {
     'No one internally who can approve content within 48 hours',
     'Looking for the cheapest editor, not a customer-acquisition engine'
   ];
+
+
+  const workSamples = [
+    { id: '68tKi1QjSBQ', title: 'This AI Will Replace All Sales Agencies', label: 'B2B SaaS · Salesforge' },
+    { id: 'QE_fv6B0n8I', title: 'Can Someone You Disinherited Fight Back? [Lawyer Explains]', label: 'Law firm · Brenton C. McWilliams' },
+    { id: 'kGFSvckEFH8', title: 'Is the R&D Tax Credit Still Worth It for a $0 Revenue Startup?', label: 'Tax advisory · R&D Tax Advisors' },
+    { id: '9aI0OzNuIKY', title: 'The 6 Worst Wingsuit Pilot Accidents In History', label: 'Faceless documentary · Extreme Edge' },
+    { id: 'NfyIRolMxOY', title: 'SCE Prime VSL', label: 'Conversion video · VSL' },
+    { id: 'rgCPBWBptWM', title: 'Faceless Documentary Animation', label: 'Motion graphics · Faceless' },
+  ];
+
+  const videoTestimonials = [
+    { id: 'Ui6A-wQDerw', title: 'In her own words', label: 'Client testimonial' },
+    { id: 'wbKrc78hidU', title: 'In her own words', label: 'Client testimonial' },
+  ];
+
+  const reviews = [
+    { text: 'Ammaz did a great job on editing and providing motion graphics for our company videos. Very communicative and responsive to adjustments with delivery in a timely manner. Highly recommend.', context: 'Company videos' },
+    { text: 'Ammaz is fantastic to work with. Very communicative, detail oriented, and quick to update edits. Highly recommend.', context: 'YouTube channel editing' },
+    { text: 'Work with Ammaz. You will not be disappointed. This will be the first of many projects with him.', context: 'Marketing agency video ads' },
+    { text: 'Great output and efficient process of feedback and edits. End result was right on point and very strong match to original vision.', context: 'Veterinary business video' },
+    { text: 'Ammaz did a great job at editing our short VSL. I would highly recommend anyone who is looking to get their VSL edited to reach out to Ammaz.', context: 'Video sales letter' },
+    { text: 'Ammaz is an excellent contractor and I will definitely work with him again.', context: 'Psychologist and author' },
+  ];
+
+  const howItWorks = [
+    { icon: <Phone size={24} />, who: 'CreativeFlic', title: 'Strategy call', desc: 'We map the first videos your buyers need to see before they buy, and the keywords they search to find them.' },
+    { icon: <Mic size={24} />, who: 'You, with our guidance', title: 'You record, or you don\'t', desc: 'Send talking points or record in one batch session with our scripts and on-camera guidance. Faceless formats need no filming at all.' },
+    { icon: <Rocket size={24} />, who: 'CreativeFlic', title: 'We do the rest', desc: 'Editing, motion graphics, thumbnails, titles, publishing and tracking which videos bring in leads and sales.' },
+  ];
+
+  const faqs = [
+    { q: 'Why YouTube?', a: 'Your buyers research before they buy, and YouTube is where they do it. Unlike paid ads, a video keeps ranking and selling for years, so your cost per customer falls over time instead of rising.' },
+    { q: 'Do I need a big audience for this to work?', a: 'No. We build for search and buyer intent, not virality. A small channel that answers the questions your buyers type into YouTube can bring in qualified leads long before it has a big subscriber count.' },
+    { q: 'How much of my time does this take?', a: 'Very little. You approve the plan, then either send talking points or record in one batch session with our scripts. Faceless formats need no filming at all. We handle everything else.' },
+    { q: 'Do I need to come up with the content ideas?', a: 'No. We research what your buyers search, plan the topics, and write the scripts. You review and approve.' },
+    { q: 'How is this different from hiring a video editor?', a: 'An editor waits for footage and direction. We own the whole loop: strategy, scripts, production, publishing and attribution, so you get a channel that is built to sell, not just edited videos.' },
+    { q: 'What results can I expect, and when?', a: 'YouTube compounds, it does not spike. Expect foundation work and your first 8 videos in months 1 to 2, winning formats by month 3, and first tracked revenue in months 4 to 6. We never promise view counts. We report the leading indicators weekly so you see progress from day one.' },
+    { q: 'Who owns the channel and content?', a: 'You do. The channel, the videos and the data are 100% yours from day one.' },
+    { q: 'How quickly can we start?', a: 'Usually within a week of the strategy call. Start with the free audit and we will show you the first 5 videos we would make.' },
+  ];
+
+  const [openFaq, setOpenFaq] = useState<number | null>(0);
 
   if (loading) {
     return (
@@ -511,6 +560,81 @@ const App = () => {
         </div>
       </section>
 
+      {/* SEE THE WORK */}
+      <section id="samples" className={`py-24 relative overflow-hidden ${isDark ? 'bg-black' : 'bg-white'}`}>
+        <div className="container mx-auto px-6 relative z-10">
+          <Reveal variant="creative-up">
+            <div className="text-center max-w-3xl mx-auto mb-14">
+              <div className={`flex items-center justify-center gap-4 mb-5`}>
+                <span className={`h-px w-8 ${isDark ? 'bg-yellow-400/50' : 'bg-yellow-500/60'}`}></span>
+                <h2 className={`${kicker} font-semibold uppercase tracking-[0.3em] text-xs`}>02 · See The Work</h2>
+                <span className={`h-px w-8 ${isDark ? 'bg-yellow-400/50' : 'bg-yellow-500/60'}`}></span>
+              </div>
+              <WordReveal as="h3" text="Real Videos. Judge the Work Yourself." className="text-4xl md:text-5xl font-bold mb-6" stagger={50} />
+              <p className={theme.textMuted}>Complex products, legal questions and big stories, made worth watching. Press play on any of them.</p>
+            </div>
+          </Reveal>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-10 max-w-6xl mx-auto">
+            {workSamples.map((v, i) => (
+              <Reveal key={v.id} delay={(i % 3) * 100} variant="fade-up">
+                <VideoTile videoId={v.id} title={v.title} label={v.label} isDark={isDark} />
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CLIENT VOICES */}
+      <section id="testimonials" className={`py-24 relative overflow-hidden ${theme.sectionBg}`}>
+        <div className="container mx-auto px-6 relative z-10">
+          <Reveal variant="creative-up">
+            <div className="text-center max-w-3xl mx-auto mb-14">
+              <div className={`flex items-center justify-center gap-4 mb-5`}>
+                <span className={`h-px w-8 ${isDark ? 'bg-yellow-400/50' : 'bg-yellow-500/60'}`}></span>
+                <h2 className={`${kicker} font-semibold uppercase tracking-[0.3em] text-xs`}>03 · Client Voices</h2>
+                <span className={`h-px w-8 ${isDark ? 'bg-yellow-400/50' : 'bg-yellow-500/60'}`}></span>
+              </div>
+              <WordReveal as="h3" text="Don’t Take Our Word for It" className="text-4xl md:text-5xl font-bold mb-6" stagger={50} />
+              <p className={theme.textMuted}>Straight from the people we have built videos for.</p>
+            </div>
+          </Reveal>
+          <Reveal variant="fade-up">
+            <div className={`flex flex-wrap justify-center items-center gap-x-8 gap-y-3 mb-14 text-sm ${theme.textMuted}`}>
+              <span className="flex items-center gap-1.5">
+                {[0, 1, 2, 3, 4].map((i) => <Star key={i} size={15} className="text-yellow-400" fill="currentColor" />)}
+                <span className={`ml-1 font-bold ${theme.text}`}>4.9</span> from 82 client reviews
+              </span>
+              <span><span className={`font-bold ${theme.text}`}>97%</span> job success</span>
+              <span><span className={`font-bold ${theme.text}`}>146</span> projects delivered</span>
+              <span><span className={`font-bold ${theme.text}`}>Top Rated Plus</span> on Upwork</span>
+            </div>
+          </Reveal>
+
+          <div className="grid lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] gap-8 max-w-6xl mx-auto items-start">
+            <div className="grid grid-cols-2 gap-4">
+              {videoTestimonials.map((v, i) => (
+                <Reveal key={v.id} delay={i * 120} variant="fade-up">
+                  <VideoTile videoId={v.id} title={v.title} label={v.label} isDark={isDark} vertical />
+                </Reveal>
+              ))}
+            </div>
+            <div className="grid sm:grid-cols-2 gap-4">
+              {reviews.map((r, i) => (
+                <Reveal key={i} delay={(i % 2) * 100} variant="fade-up" className="h-full">
+                  <div className={`p-6 rounded-2xl border h-full flex flex-col ${isDark ? 'bg-neutral-900/60 border-neutral-800' : 'bg-white border-neutral-200 shadow-sm'}`}>
+                    <div className="flex gap-0.5 mb-3">
+                      {[0, 1, 2, 3, 4].map((k) => <Star key={k} size={13} className="text-yellow-400" fill="currentColor" />)}
+                    </div>
+                    <p className={`text-sm leading-relaxed flex-grow ${theme.text}`}>“{r.text}”</p>
+                    <div className={`mt-4 text-[11px] uppercase tracking-[0.15em] ${isDark ? 'text-neutral-500' : 'text-neutral-600'}`}>Verified client · {r.context}</div>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ENGINE SECTION */}
       <section id="engine" className={`py-24 relative overflow-hidden ${isDark ? 'bg-black' : 'bg-white'}`}>
         <div className="container mx-auto px-6 relative z-10">
@@ -518,7 +642,7 @@ const App = () => {
             <div className="text-center max-w-3xl mx-auto mb-16">
               <div className={`flex items-center justify-center gap-4 mb-5`}>
                 <span className={`h-px w-8 ${isDark ? 'bg-yellow-400/50' : 'bg-yellow-500/60'}`}></span>
-                <h2 className={`${kicker} font-semibold uppercase tracking-[0.3em] text-xs`}>02 · The Revenue System</h2>
+                <h2 className={`${kicker} font-semibold uppercase tracking-[0.3em] text-xs`}>04 · The Revenue System</h2>
                 <span className={`h-px w-8 ${isDark ? 'bg-yellow-400/50' : 'bg-yellow-500/60'}`}></span>
               </div>
               <WordReveal as="h3" text="Not an Editing Agency. A Revenue System." className="text-4xl md:text-5xl font-bold mb-6" stagger={50} />
@@ -563,7 +687,7 @@ const App = () => {
             <div className="text-center max-w-3xl mx-auto">
               <div className={`flex items-center justify-center gap-4 mb-5`}>
                 <span className={`h-px w-8 ${isDark ? 'bg-yellow-400/50' : 'bg-yellow-500/60'}`}></span>
-                <h2 className={`${kicker} font-semibold uppercase tracking-[0.3em] text-xs`}>03 · Inside The Engine Room</h2>
+                <h2 className={`${kicker} font-semibold uppercase tracking-[0.3em] text-xs`}>05 · Inside The Engine Room</h2>
                 <span className={`h-px w-8 ${isDark ? 'bg-yellow-400/50' : 'bg-yellow-500/60'}`}></span>
               </div>
               <WordReveal as="h3" text="Watch The System Work" className="text-4xl md:text-5xl font-bold mb-6" stagger={60} />
@@ -576,6 +700,38 @@ const App = () => {
         <WorkDemo isDark={isDark} />
       </section>
 
+      {/* HOW IT WORKS */}
+      <section id="how" className={`py-24 ${isDark ? 'bg-black' : 'bg-white'}`}>
+        <div className="container mx-auto px-6">
+          <Reveal variant="creative-up">
+            <div className="text-center max-w-3xl mx-auto mb-14">
+              <div className={`flex items-center justify-center gap-4 mb-5`}>
+                <span className={`h-px w-8 ${isDark ? 'bg-yellow-400/50' : 'bg-yellow-500/60'}`}></span>
+                <h2 className={`${kicker} font-semibold uppercase tracking-[0.3em] text-xs`}>06 · How It Works</h2>
+                <span className={`h-px w-8 ${isDark ? 'bg-yellow-400/50' : 'bg-yellow-500/60'}`}></span>
+              </div>
+              <WordReveal as="h3" text="Three Steps. Almost None of Them Yours." className="text-4xl md:text-5xl font-bold mb-6" stagger={50} />
+              <p className={theme.textMuted}>You bring the expertise. We turn it into a channel that sells.</p>
+            </div>
+          </Reveal>
+          <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+            {howItWorks.map((step, i) => (
+              <Reveal key={i} delay={i * 120} variant="fade-up" className="h-full">
+                <div className={`p-7 rounded-3xl border h-full ${isDark ? 'bg-neutral-900 border-neutral-800' : 'bg-neutral-50 border-neutral-200'}`}>
+                  <div className="flex items-center justify-between mb-5">
+                    <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${theme.iconBg}`}>{step.icon}</div>
+                    <span className={`text-4xl font-black ${isDark ? 'text-neutral-800' : 'text-neutral-200'}`}>0{i + 1}</span>
+                  </div>
+                  <div className={`text-[10px] font-bold uppercase tracking-[0.2em] mb-2 ${kicker}`}>{step.who}</div>
+                  <h4 className={`text-xl font-bold mb-3 ${theme.text}`}>{step.title}</h4>
+                  <p className={`text-sm leading-relaxed ${theme.textMuted}`}>{step.desc}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* MILESTONE CURVE */}
       <section id="curve" className={`py-24 ${theme.sectionBg}`}>
         <div className="container mx-auto px-6">
@@ -583,7 +739,7 @@ const App = () => {
             <div className="text-center max-w-3xl mx-auto mb-16">
               <div className={`flex items-center justify-center gap-4 mb-5`}>
                 <span className={`h-px w-8 ${isDark ? 'bg-yellow-400/50' : 'bg-yellow-500/60'}`}></span>
-                <h2 className={`${kicker} font-semibold uppercase tracking-[0.3em] text-xs`}>04 · No Surprises</h2>
+                <h2 className={`${kicker} font-semibold uppercase tracking-[0.3em] text-xs`}>07 · No Surprises</h2>
                 <span className={`h-px w-8 ${isDark ? 'bg-yellow-400/50' : 'bg-yellow-500/60'}`}></span>
               </div>
               <WordReveal as="h3" text="Exactly What Happens, Month by Month" className="text-4xl md:text-5xl font-bold mb-6" stagger={50} />
@@ -641,7 +797,7 @@ const App = () => {
             <div className="text-center max-w-3xl mx-auto mb-16">
               <div className={`flex items-center justify-center gap-4 mb-5`}>
                 <span className={`h-px w-8 ${isDark ? 'bg-yellow-400/50' : 'bg-yellow-500/60'}`}></span>
-                <h2 className={`${kicker} font-semibold uppercase tracking-[0.3em] text-xs`}>05 · Transparent Pricing</h2>
+                <h2 className={`${kicker} font-semibold uppercase tracking-[0.3em] text-xs`}>08 · Transparent Pricing</h2>
                 <span className={`h-px w-8 ${isDark ? 'bg-yellow-400/50' : 'bg-yellow-500/60'}`}></span>
               </div>
               <WordReveal as="h3" text="The Price of a Freelancer. The Standard of a Growth Agency." className="text-4xl md:text-5xl font-bold mb-6" stagger={45} />
@@ -728,7 +884,7 @@ const App = () => {
             <div className="text-center max-w-3xl mx-auto mb-16">
               <div className={`flex items-center justify-center gap-4 mb-5`}>
                 <span className={`h-px w-8 ${isDark ? 'bg-yellow-400/50' : 'bg-yellow-500/60'}`}></span>
-                <h2 className={`${kicker} font-semibold uppercase tracking-[0.3em] text-xs`}>06 · Zero Fine Print</h2>
+                <h2 className={`${kicker} font-semibold uppercase tracking-[0.3em] text-xs`}>09 · Zero Fine Print</h2>
                 <span className={`h-px w-8 ${isDark ? 'bg-yellow-400/50' : 'bg-yellow-500/60'}`}></span>
               </div>
               <WordReveal as="h3" text="Built to Be the Safest Bet You Make" className="text-4xl md:text-5xl font-bold mb-6" stagger={50} />
@@ -779,7 +935,7 @@ const App = () => {
             <div className="text-center max-w-3xl mx-auto mb-16">
               <div className={`flex items-center justify-center gap-4 mb-5`}>
                 <span className={`h-px w-8 ${isDark ? 'bg-yellow-400/50' : 'bg-yellow-500/60'}`}></span>
-                <h2 className={`${kicker} font-semibold uppercase tracking-[0.3em] text-xs`}>07 · We Are Selective</h2>
+                <h2 className={`${kicker} font-semibold uppercase tracking-[0.3em] text-xs`}>10 · We Are Selective</h2>
                 <span className={`h-px w-8 ${isDark ? 'bg-yellow-400/50' : 'bg-yellow-500/60'}`}></span>
               </div>
               <WordReveal as="h3" text="This Only Works for the Right Brand" className="text-4xl md:text-5xl font-bold mb-6" stagger={50} />
@@ -843,6 +999,37 @@ const App = () => {
               </div>
             </div>
           </Reveal>
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section id="faq" className={`py-24 ${theme.sectionBg}`}>
+        <div className="container mx-auto px-6">
+          <Reveal variant="creative-up">
+            <div className="text-center max-w-3xl mx-auto mb-14">
+              <div className={`flex items-center justify-center gap-4 mb-5`}>
+                <span className={`h-px w-8 ${isDark ? 'bg-yellow-400/50' : 'bg-yellow-500/60'}`}></span>
+                <h2 className={`${kicker} font-semibold uppercase tracking-[0.3em] text-xs`}>11 · Before We Talk</h2>
+                <span className={`h-px w-8 ${isDark ? 'bg-yellow-400/50' : 'bg-yellow-500/60'}`}></span>
+              </div>
+              <WordReveal as="h3" text="Good Questions. Straight Answers." className="text-4xl md:text-5xl font-bold mb-6" stagger={50} />
+              <p className={theme.textMuted}>The things founders and partners ask us most.</p>
+            </div>
+          </Reveal>
+          <div className="max-w-3xl mx-auto space-y-3">
+            {faqs.map((f, i) => {
+              const open = openFaq === i;
+              return (
+                <div key={i} className={`rounded-2xl border transition-colors ${open ? (isDark ? 'border-blue-500/50 bg-neutral-900' : 'border-blue-500 bg-white') : (isDark ? 'border-neutral-800 bg-neutral-900/40' : 'border-neutral-200 bg-white')}`}>
+                  <button type="button" onClick={() => setOpenFaq(open ? null : i)} aria-expanded={open} className="w-full flex items-center justify-between gap-4 p-5 text-left">
+                    <span className={`font-bold ${theme.text}`}>{f.q}</span>
+                    <ChevronDown size={18} className={`shrink-0 transition-transform duration-300 ${open ? 'rotate-180 text-blue-500' : theme.textMuted}`} />
+                  </button>
+                  {open && <p className={`px-5 pb-5 -mt-1 text-sm leading-relaxed ${theme.textMuted}`}>{f.a}</p>}
+                </div>
+              );
+            })}
+          </div>
         </div>
       </section>
 
