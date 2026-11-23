@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import { Play } from 'lucide-react';
 
 interface VideoTileProps {
-  videoId: string;
+  videoId?: string;
+  src?: string;      // self-hosted video file
+  poster?: string;   // cover image for self-hosted video
   title: string;
   label: string;
   isDark: boolean;
@@ -10,13 +12,15 @@ interface VideoTileProps {
 }
 
 /** Click-to-load YouTube tile: thumbnail first, player only after play is pressed. */
-const VideoTile: React.FC<VideoTileProps> = ({ videoId, title, label, isDark, vertical }) => {
+const VideoTile: React.FC<VideoTileProps> = ({ videoId, src, poster, title, label, isDark, vertical }) => {
   const [playing, setPlaying] = useState(false);
 
   return (
     <figure className="group h-full">
       <div className={`relative ${vertical ? 'aspect-[9/16]' : 'aspect-video'} rounded-2xl overflow-hidden border ${isDark ? 'border-white/10 bg-neutral-900' : 'border-black/10 bg-neutral-200'}`}>
-        {playing ? (
+        {playing && src ? (
+          <video className="absolute inset-0 w-full h-full object-contain bg-black" src={src} controls autoPlay playsInline />
+        ) : playing ? (
           <iframe
             className="absolute inset-0 w-full h-full"
             src={`https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1`}
@@ -28,10 +32,10 @@ const VideoTile: React.FC<VideoTileProps> = ({ videoId, title, label, isDark, ve
         ) : (
           <button type="button" onClick={() => setPlaying(true)} className="absolute inset-0 w-full h-full" aria-label={`Play video: ${title}`}>
             <img
-              src={`https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`}
+              src={poster || `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`}
               alt=""
               loading="lazy"
-              className={`absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 ${vertical ? 'scale-[1.35] group-hover:scale-[1.4]' : ''}`}
+              className={`absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 ${vertical && !poster ? 'scale-[1.35] group-hover:scale-[1.4]' : ''}`}
             />
             <span className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
             <span className="absolute inset-0 flex items-center justify-center">

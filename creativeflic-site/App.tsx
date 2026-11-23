@@ -304,16 +304,30 @@ const App = () => {
   ];
 
   const videoTestimonials = [
-    { id: 'Ui6A-wQDerw', title: 'In her own words', label: 'Client testimonial' },
-    { id: 'wbKrc78hidU', title: 'In her own words', label: 'Client testimonial' },
+    { src: '/testimonials/pj-cranley-weiland.mp4', poster: '/testimonials/pj-cranley-weiland.jpg', title: 'Pj Cranley Weiland', label: 'Business coach · TEDx speaker' },
+    { videoId: 'Ui6A-wQDerw', title: 'In her own words', label: 'Client testimonial' },
+    { videoId: 'wbKrc78hidU', title: 'In her own words', label: 'Client testimonial' },
+    { src: '/testimonials/client-bali.mp4', poster: '/testimonials/client-bali.jpg', title: 'In his own words', label: 'Client testimonial' },
   ];
 
   const reviews = [
+    { text: 'Ammaz was really great to work with. He responded quickly, was extremely thorough, and delivered high-quality work. I was really impressed by the amount of time he put into understanding our branding and messaging to make sure the edits he made were aligned. I’m extremely pleased with the results and will definitely hire him in the future.', context: 'VSL editing' },
+    { text: 'Ammaz understood our business, working with us to build a highly engaging motion graphics explainer video regarding our cryptocurrency. He went above and beyond to deliver a video that we are extremely happy with. Don’t go anywhere else or you will regret it.', context: 'Crypto explainer video' },
+    { text: 'Working with Ammaz was an absolute pleasure! From start to finish, they demonstrated exceptional creativity, professionalism, and attention to detail. Ammaz took the time to understand our vision and turned it into a visually stunning masterpiece.', context: 'B2B tech marketing agency' },
+    { text: 'Ammaz did a great job creating a VSL for us. We provided the content, he created a prototype, we came back with edits and notes, and he took care of them all, making a nice video about our interactive displays. Will use Ammaz again when our next video project comes up!', context: 'Product VSL' },
+    { text: 'I had a great experience working with Ammaz. His clear and prompt communication made the entire process smooth and efficient, and what he produced was high quality and fit our brand’s aesthetics.', context: 'TV promo' },
+    { text: 'Absolutely amazing experience! Ammaz came through for me on a last-minute business presentation and nailed it perfectly. He was punctual, communicated clearly, and quickly incorporated all my feedback.', context: 'Business presentation' },
     { text: 'Ammaz did a great job on editing and providing motion graphics for our company videos. Very communicative and responsive to adjustments with delivery in a timely manner. Highly recommend.', context: 'Company videos' },
-    { text: 'Ammaz is fantastic to work with. Very communicative, detail oriented, and quick to update edits. Highly recommend.', context: 'YouTube channel editing' },
+    { text: 'Ammaz is fantastic to work with. Very communicative, detail oriented, and quick to update edits. Highly recommend.', context: 'YouTube documentary editing' },
+    { text: 'Ammaz was a pleasure to work with. He was always prompt, listened to our feedback and was patient as this was a learning curve for us. I would happily recommend Ammaz for YouTube ads and video training editing.', context: 'YouTube video ad' },
     { text: 'Work with Ammaz. You will not be disappointed. This will be the first of many projects with him.', context: 'Marketing agency video ads' },
+    { text: 'Great skills. Was very responsive and open to applying feedback until we got it right. Once we had the first video where we needed it he was quickly able to produce the others.', context: 'Meta ads for a chiropractic clinic' },
+    { text: 'Muhammad is very helpful. He helped us to make this product advert video with some 3D animation effects. I highly recommend him to create videos for people.', context: 'Product promo with 3D animation' },
     { text: 'Great output and efficient process of feedback and edits. End result was right on point and very strong match to original vision.', context: 'Veterinary business video' },
+    { text: 'Ammaz was absolutely fantastic and extremely talented. He was professional every step of the way and I really enjoyed working with him.', context: 'Engagement video' },
     { text: 'Ammaz did a great job at editing our short VSL. I would highly recommend anyone who is looking to get their VSL edited to reach out to Ammaz.', context: 'Video sales letter' },
+    { text: 'Ammaz did a great job on editing and providing motion graphics for our VSL landing page and onboarding video. Great work and communicated on a timely manner.', context: 'VSL and onboarding video' },
+    { text: 'Great work and very efficient! Video was completed to a high standard and all feedback applied.', context: 'Aviation company reel' },
     { text: 'Ammaz is an excellent contractor and I will definitely work with him again.', context: 'Psychologist and author' },
   ];
 
@@ -335,6 +349,7 @@ const App = () => {
   ];
 
   const [openFaq, setOpenFaq] = useState<number | null>(0);
+  const [showAllReviews, setShowAllReviews] = useState(false);
 
   if (loading) {
     return (
@@ -610,17 +625,18 @@ const App = () => {
             </div>
           </Reveal>
 
-          <div className="grid lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] gap-8 max-w-6xl mx-auto items-start">
-            <div className="grid grid-cols-2 gap-4">
-              {videoTestimonials.map((v, i) => (
-                <Reveal key={v.id} delay={i * 120} variant="fade-up">
-                  <VideoTile videoId={v.id} title={v.title} label={v.label} isDark={isDark} vertical />
-                </Reveal>
-              ))}
-            </div>
-            <div className="grid sm:grid-cols-2 gap-4">
-              {reviews.map((r, i) => (
-                <Reveal key={i} delay={(i % 2) * 100} variant="fade-up" className="h-full">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 max-w-6xl mx-auto mb-14">
+            {videoTestimonials.map((v, i) => (
+              <Reveal key={i} delay={i * 100} variant="fade-up">
+                <VideoTile videoId={v.videoId} src={v.src} poster={v.poster} title={v.title} label={v.label} isDark={isDark} vertical />
+              </Reveal>
+            ))}
+          </div>
+
+          <div className="max-w-6xl mx-auto">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {reviews.slice(0, showAllReviews ? reviews.length : 6).map((r, i) => (
+                <Reveal key={i} delay={(i % 3) * 80} variant="fade-up" className="h-full">
                   <div className={`p-6 rounded-2xl border h-full flex flex-col ${isDark ? 'bg-neutral-900/60 border-neutral-800' : 'bg-white border-neutral-200 shadow-sm'}`}>
                     <div className="flex gap-0.5 mb-3">
                       {[0, 1, 2, 3, 4].map((k) => <Star key={k} size={13} className="text-yellow-400" fill="currentColor" />)}
@@ -631,6 +647,13 @@ const App = () => {
                 </Reveal>
               ))}
             </div>
+            {!showAllReviews && (
+              <div className="text-center mt-8">
+                <button type="button" onClick={() => setShowAllReviews(true)} className={`px-7 py-3 rounded-full border font-semibold text-sm transition-all duration-300 ${isDark ? 'border-white/15 hover:border-white/40 text-neutral-300 hover:text-white' : 'border-black/15 hover:border-black/40 text-neutral-700 hover:text-black'}`}>
+                  Show all {reviews.length} reviews
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </section>
