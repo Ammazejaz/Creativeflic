@@ -44,7 +44,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ brandBlue, onSuccess, isDark 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validateForm()) {
-        alert("Please fill in your name, email, and store URL.");
+        alert("Please fill in your name, email, and website or YouTube channel.");
         return;
     }
 
@@ -56,7 +56,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ brandBlue, onSuccess, isDark 
     dataToSend.append('NAME', formData.NAME);
     dataToSend.append('EMAIL', formData.EMAIL);
     dataToSend.append('Service_Type', `Free Audit / ${formData.Revenue}`);
-    dataToSend.append('Message', `Store/Website: ${formData.URL}\n\n${formData.Message}`);
+    dataToSend.append('Message', `Website/Channel: ${formData.URL}\n\n${formData.Message}`);
 
     try {
       await fetch(SCRIPT_URL, {
@@ -86,7 +86,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ brandBlue, onSuccess, isDark 
 
       <div className="text-center mb-8 relative z-10">
         <h3 className={`text-3xl font-bold mb-3 ${textColor}`}>Get Your Free YouTube Revenue Audit</h3>
-        <p className="text-neutral-400">Drop your store URL below. Within 48 hours you'll get a 10-minute video teardown of your niche: keywords, competitors, and the first 5 videos to make. No call, no pitch, no obligation.</p>
+        <p className="text-neutral-400">Drop your website or YouTube channel below. Within 48 hours you'll get a 10-minute video teardown of your niche: keywords, competitors, and the first 5 videos to make. No call, no pitch, no obligation.</p>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-6 relative z-10">
@@ -120,7 +120,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ brandBlue, onSuccess, isDark 
 
         <div className="grid md:grid-cols-2 gap-6">
           <div className="space-y-2">
-            <label className={`text-xs font-bold uppercase tracking-wider ml-1 ${labelColor}`}>Store / Website URL</label>
+            <label className={`text-xs font-bold uppercase tracking-wider ml-1 ${labelColor}`}>Website or YouTube Channel</label>
             <input
               type="text"
               name="URL"
@@ -192,6 +192,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ brandBlue, onSuccess, isDark 
         </button>
         <p className={`text-center text-xs ${isDark ? 'text-neutral-600' : 'text-neutral-500'}`}>
           We reply within 24 hours. Audits are limited to 6 per week, first come first served.
+          <br />By sending this you agree to our <a href="/privacy.html" className="underline underline-offset-2">Privacy Policy</a>. No spam, ever.
         </p>
       </form>
     </div>

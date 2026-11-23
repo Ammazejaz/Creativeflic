@@ -11,6 +11,14 @@ const __dirname = path.dirname(__filename);
 export default defineConfig(() => {
   return {
     plugins: [react()],
+    build: {
+      rollupOptions: {
+        input: {
+          main: path.resolve(__dirname, 'index.html'),
+          lawFirms: path.resolve(__dirname, 'law-firms/index.html'),
+        },
+      },
+    },
     resolve: {
       alias: {
         // Example alias if you use `@` to refer to your `src` directory

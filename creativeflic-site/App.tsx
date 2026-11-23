@@ -4,7 +4,7 @@ import {
   X,
   Instagram,
   Linkedin,
-  Twitter,
+  Youtube,
   TrendingUp,
   ArrowUp,
   ArrowRight,
@@ -26,7 +26,13 @@ import {
   Key,
   LineChart,
   PlayCircle,
-  Rocket
+  Rocket,
+  Scale,
+  Star,
+  ChevronDown,
+  Phone,
+  Mic,
+  Calendar
 } from 'lucide-react';
 import Preloader from './components/Preloader';
 import SectionParticles from './components/Particles';
@@ -35,11 +41,17 @@ import InfiniteTicker from './components/InfiniteTicker';
 import SuccessOverlay from './components/SuccessOverlay';
 import Reveal from './components/Reveal';
 import ProjectCard from './components/ProjectCard';
+import CaseStudyModal from './components/CaseStudyModal';
+import { track } from './analytics';
+import { BOOKING_URL } from './config';
+import LawFirmsPage from './components/LawFirmsPage';
 import WordReveal from './components/WordReveal';
 import WorkDemo from './components/WorkDemo';
 import CountUp from './components/CountUp';
 import Parallax from './components/Parallax';
 import ContactForm from './components/ContactForm';
+import FounderVideo from './components/FounderVideo';
+import VideoTile from './components/VideoTile';
 
 const App = () => {
   const [loading, setLoading] = useState(true);
@@ -122,7 +134,7 @@ const App = () => {
 
   useEffect(() => {
     if (loading) return;
-    const ids = ['home', 'work', 'engine', 'pricing', 'fit', 'contact'];
+    const ids = ['home', 'work', 'samples', 'testimonials', 'engine', 'how', 'pricing', 'fit', 'faq', 'contact'];
     const obs = new IntersectionObserver(
       (entries) => entries.forEach((e) => { if (e.isIntersecting) setActiveSection((e.target as HTMLElement).id); }),
       { rootMargin: '-45% 0px -50% 0px' }
@@ -132,6 +144,7 @@ const App = () => {
   }, [loading]);
 
   const handleSuccess = () => {
+    track('generate_lead', { form: 'free_audit' });
     setShowSuccessOverlay(true);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -149,23 +162,39 @@ const App = () => {
     { label: 'The System', id: 'engine' },
     { label: 'Pricing', id: 'pricing' },
     { label: 'Who It’s For', id: 'fit' },
+    { label: 'FAQ', id: 'faq' },
   ];
 
   const caseStudies = [
     {
       featured: true,
       mark: "HDC",
+      shot: "/proof/hdc-analytics.jpg",
+      thumbs: ["rZEyxn1wi-0", "NZhFjot4f60", "sk6ca6IlQ6I", "-_tKbNk7QWs"],
+      video: "rZEyxn1wi-0",
+      detail: {
+        challenge: "Hearing aids are a considered, often emotional purchase. Buyers research for weeks, and HearDirectClub needed to be the trusted voice while they did, not just another ad.",
+        built: ["Education-first channel answering the exact questions buyers search", "Long-form explainers plus a Shorts system for reach", "One pipeline feeding organic videos and ad creative", "Weekly reporting on leading indicators"],
+        outcome: ["77.9K organic views", "1.9K hours of watch time", "+168 subscribers", "Client feedback: results better than expected"]
+      },
       category: "Hearing Tech · Ecommerce",
       title: "HDC: A Full YouTube Engine for a Hearing Tech Brand",
-      role: "Strategy · Scripts · Production · Publishing · Attribution",
+      role: "Strategy · Scripts · Production · Publishing · Reporting",
       quote: { text: "Results better than expected.", by: "Client feedback · first engagement" },
-      results: ["Education-first channel for a considered health purchase", "One pipeline feeding organic content and ad creative", "Weekly reporting on leading indicators and coded sales"],
+      results: ["Education-first channel for a considered health purchase", "One pipeline feeding organic content and ad creative", "Weekly reporting on views, watch time and leads"],
       link: "https://heardirectclub.com/products/nova",
-      tags: ["Ecommerce", "Health Tech", "Attribution"],
-      metric: { value: "360°", label: "Revenue engine" }
+      tags: ["Ecommerce", "Health Tech", "Education"],
+      metric: { value: "77.9K", label: "Organic views · 1.9K watch hours" }
     },
     {
       mark: "SCIATIEASE",
+      thumbs: ["NfyIRolMxOY", "5txKw9_Qv78", "0pRp5mYONGc", "YzShuWB0Ipk"],
+      video: "NfyIRolMxOY",
+      detail: {
+        challenge: "A health product sold on Amazon and DTC needed video that turns cold traffic into buyers, at a cost per sale that keeps paid ads profitable.",
+        built: ["Long-form VSLs on a direct-response structure: hook, problem, proof, offer", "Short vertical VSLs and ad cuts from the same pipeline", "Motion graphics, captions, b-roll and sound design for every version"],
+        outcome: ["Brand scaled to $5.5M in annual revenue", "5x improvement in ad ROI", "Conversion video feeding both paid and organic"]
+      },
       category: "Health & Recovery · Ecommerce",
       title: "A $5.5M Health Brand Built on Conversion Video",
       role: "VSL + Ad Creative Engine",
@@ -176,17 +205,32 @@ const App = () => {
     },
     {
       mark: "ZENTI",
+      shot: "/proof/zenti-analytics.jpg",
+      thumbs: ["nWvDvRGxbyk", "iHUEVRLSbUE", "8WPZv7iKMqk", "G_hX2oFnQS4"],
+      video: "nWvDvRGxbyk",
+      detail: {
+        challenge: "Payments software is hard to explain and easy to ignore. Zenti needed content that made a dry, complex product worth watching for business owners and partners.",
+        built: ["Profit from Payments, a payments-education channel", "Long-form explainers plus a short-form distribution system across platforms", "A fully remote production pipeline, 11 months running"],
+        outcome: ["22K+ organic views on education content", "Top Shorts reaching 1,000 to 1,500 views each", "An 11-month engagement with a 5.0 client rating"]
+      },
       category: "Fintech",
       title: "Zenti: Making Payments Content Worth Watching",
       role: "Content Engine + Short-Form System",
       results: ["Complex payments product translated for camera", "Short-form distribution system across platforms", "Fully remote production pipeline"],
       link: "https://zenti.com/",
       tags: ["Fintech", "B2B", "Shorts"],
-      metric: { value: "B2B", label: "Fintech made watchable" }
+      metric: { value: "22.4K", label: "Organic views · fintech made watchable" }
     },
     {
       featured: true,
       mark: "SALESFORGE",
+      thumbs: ["68tKi1QjSBQ", "OC3OZpGIxew"],
+      video: "68tKi1QjSBQ",
+      detail: {
+        challenge: "Salesforge, a YC-backed AI sales platform, sells a complex product into a crowded market. Features alone don't win attention on YouTube.",
+        built: ["Story-led videos for the official channel that teach outbound sales, not just the product", "A scalable faceless production pipeline", "Complex AI features turned into simple, watchable explanations"],
+        outcome: ["An always-on content pipeline for the official channel", "Stronger inbound authority in the AI sales category"]
+      },
       category: "B2B SaaS",
       title: "Salesforge: Complex AI Turned Into Inbound Pipeline",
       role: "Faceless Content Engine",
@@ -194,6 +238,42 @@ const App = () => {
       link: "https://www.salesforge.ai/",
       tags: ["SaaS", "Faceless", "Education"],
       metric: { value: "24/7", label: "Always-on content pipeline" }
+    },
+    {
+      featured: true,
+      mark: "TUNA",
+      shot: "/proof/tuna-analytics.jpg",
+      thumbs: ["ukcyNGGO8uY", "UALcJDQyqOQ", "gVTPybaN1ro"],
+      video: "ukcyNGGO8uY",
+      detail: {
+        challenge: "Build a faceless channel for an automotive brand that earns attention in one of YouTube's most crowded niches, without anyone on camera.",
+        built: ["Story-led scripts built for retention", "Cinematic faceless production: archival footage, motion graphics, voiceover pacing", "Titles and thumbnails tested for click-through"],
+        outcome: ["56M organic views", "136K+ subscribers", "$333K+ in channel revenue"]
+      },
+      category: "Automotive · Faceless Channel",
+      title: "Tuna No Crust: A Faceless Channel Worth $333K+",
+      role: "Faceless Storytelling Engine",
+      results: ["56M organic views and 136K+ subscribers", "$333K+ in channel revenue", "Story-led scripts built for retention, packaging tested for CTR"],
+      link: null,
+      tags: ["Faceless", "Storytelling", "Revenue"],
+      metric: { value: "56M", label: "Organic views" }
+    },
+    {
+      mark: "LAW",
+      thumbs: ["cOgay6dZ0NM", "QE_fv6B0n8I", "P9FE53dt3ow", "kGFSvckEFH8"],
+      video: "cOgay6dZ0NM",
+      detail: {
+        challenge: "Attorneys and tax advisors know their subject but have no time to make content. Their clients search YouTube with real questions before they call anyone.",
+        built: ["Search-led topics on estate planning, probate, guardianship and R&D tax credits", "The attorney records or sends talking points. We handle editing, motion graphics, captions, thumbnails, SEO and publishing", "A consistent house style and a dependable weekly pipeline"],
+        outcome: ["500+ explainer videos produced", "A searchable library that answers client questions around the clock"]
+      },
+      category: "Law & Tax Firms · Professional Services",
+      title: "Expert Explainer Channels That Bring In Consultations",
+      role: "Brenton C. McWilliams Law · R&D Tax Advisors",
+      results: ["Search-led legal and tax topics", "The attorney records, we handle everything else", "A dependable weekly publishing pipeline"],
+      link: "https://www.youtube.com/@thelawofficesofbrentonc.mc787",
+      tags: ["Legal", "Tax", "Education"],
+      metric: { value: "500+", label: "Explainer videos produced" }
     }
   ];
 
@@ -220,8 +300,8 @@ const App = () => {
     },
     {
       icon: <BarChart3 size={26} />,
-      title: 'Attribution',
-      desc: 'UTM links, promo codes, GA4 assisted conversions and post-purchase surveys, so you see coded revenue, not vanity views.'
+      title: 'Reporting',
+      desc: 'A weekly Loom update and a live dashboard: views, watch time, click-through, retention and the leads your videos bring in.'
     }
   ];
 
@@ -238,8 +318,8 @@ const App = () => {
     },
     {
       phase: 'Months 4–6',
-      title: 'First Coded Revenue',
-      points: ['Promo-code & UTM-tracked sales landing', 'Winning videos become ad creative', 'Performance-aligned pricing kicks in']
+      title: 'First Leads From YouTube',
+      points: ['Videos start ranking for buyer searches', 'Winning videos become ad creative', 'Enquiries arriving from your channel']
     },
     {
       phase: 'Months 6–12',
@@ -249,7 +329,7 @@ const App = () => {
   ];
 
   const fitYes = [
-    'Product brand doing $1M–$20M in annual revenue',
+    'Product brand doing $1M–$20M in annual revenue, or an expert-led firm with high-value clients',
     'AOV over $60 or customer LTV over $150',
     'Education-heavy purchase where customers research before buying',
     'Founder or CMO who already believes in content. We screen, we never evangelize',
@@ -264,6 +344,107 @@ const App = () => {
     'Looking for the cheapest editor, not a customer-acquisition engine'
   ];
 
+
+  const sampleTabs: { label: string; videos: { id: string; title: string; label: string }[] }[] = [
+    { label: 'Featured', videos: [
+      { id: 'ukcyNGGO8uY', title: 'Why Car Brands Are Quietly Threatening YouTubers', label: 'Faceless channel · Tuna No Crust · 56M views' },
+      { id: '87XQIwoZ6pg', title: 'Money Ball: Levi vs Eric', label: 'Creator · Lively Lewis Show · 6M+ subs' },
+      { id: '68tKi1QjSBQ', title: 'This AI Will Replace All Sales Agencies', label: 'B2B SaaS · Salesforge' },
+      { id: 'cOgay6dZ0NM', title: 'Alabama’s Hidden 90-Day Trust Rule', label: 'Law firm · Brenton C. McWilliams' },
+      { id: 'rZEyxn1wi-0', title: 'How Much Do Hearing Aids Cost in 2026?', label: 'DTC health · HearDirectClub' },
+      { id: 'tbswXCkh6ug', title: 'The Dating Expert: “I’ve Helped 4,000 Men Find Love”', label: 'Podcast · The Passionate Few · 326K subs' },
+    ]},
+    { label: 'B2B & SaaS', videos: [
+      { id: '68tKi1QjSBQ', title: 'This AI Will Replace All Sales Agencies', label: 'B2B SaaS · Salesforge' },
+      { id: 'OC3OZpGIxew', title: 'What I Learned From Sending 10,000 Terrible Cold Emails', label: 'B2B SaaS · Salesforge' },
+      { id: 'nWvDvRGxbyk', title: 'The Easiest Way to Start Earning in Payments', label: 'Fintech · Zenti / Profit from Payments' },
+      { id: 'Sa_NBfWW510', title: 'If You Run Facebook Ads… Everything Just Changed', label: 'Founder content · Perform Digital Media' },
+    ]},
+    { label: 'Law & Finance', videos: [
+      { id: 'cOgay6dZ0NM', title: 'Alabama’s Hidden 90-Day Trust Rule', label: 'Law firm · Brenton C. McWilliams' },
+      { id: 'QE_fv6B0n8I', title: 'Can Someone You Disinherited Fight Back?', label: 'Law firm · Brenton C. McWilliams' },
+      { id: 'P9FE53dt3ow', title: 'The Tax Deadline Myth That Could Cost Founders Thousands', label: 'Tax advisory · R&D Tax Advisors' },
+    ]},
+    { label: 'Creators & Personal Brands', videos: [
+      { id: '87XQIwoZ6pg', title: 'Money Ball: Levi vs Eric', label: 'Creator · Lively Lewis Show · 6M+ subs' },
+      { id: '1-4xo4G2PQw', title: 'What Really Happens When I Take My Family to Costco', label: 'Creator · Heather McDonald' },
+      { id: 'tbswXCkh6ug', title: 'The Dating Expert: “I’ve Helped 4,000 Men Find Love”', label: 'Podcast · The Passionate Few · 326K subs' },
+      { id: 'HtexMiTvGaA', title: 'Ticket Mastery: Expert VSL', label: 'Expert VSL · Personal brand' },
+      { id: 'IBdWTuDaYio', title: 'The Hidden Gem of Italy: Procida', label: 'Travel documentary · Brown Boy Travels' },
+      { id: 'IKGGi1_E_Po', title: 'Talking-Head VSL with Motion Graphics', label: 'On-camera VSL · Personal brand' },
+    ]},
+    { label: 'Agencies & VSLs', videos: [
+      { id: 'Sa_NBfWW510', title: 'If You Run Facebook Ads… Everything Just Changed', label: 'Founder content · Perform Digital Media' },
+      { id: 'E7ZSXLfMous', title: 'Motion Graphics VSL', label: 'Agency VSL · Shoreline Social Media Group' },
+      { id: '0suPsGTZxNU', title: 'Creative Agency Promo', label: 'Agency promo · Revonish' },
+      { id: 'nMg9qYcJISg', title: 'Premium Offer Magnet VSL', label: 'Lead-magnet VSL' },
+      { id: 'gXgLKrPLS8Y', title: 'Video Sales Letter with Motion Graphics', label: 'Motion graphics VSL' },
+      { id: 'NfyIRolMxOY', title: 'SciatiEase Conversion VSL', label: 'VSL · SciatiEase · $5.5M brand' },
+    ]},
+    { label: 'DTC & Health', videos: [
+      { id: 'rZEyxn1wi-0', title: 'How Much Do Hearing Aids Cost in 2026?', label: 'DTC health · HearDirectClub' },
+      { id: 'NZhFjot4f60', title: 'Does Medicare Cover Hearing Aids? The Honest Answer', label: 'DTC health · HearDirectClub' },
+      { id: 'NfyIRolMxOY', title: 'SciatiEase Conversion VSL', label: 'VSL · SciatiEase · $5.5M brand' },
+    ]},
+    { label: 'Faceless & Documentary', videos: [
+      { id: 'ukcyNGGO8uY', title: 'Why Car Brands Are Quietly Threatening YouTubers', label: 'Faceless channel · Tuna No Crust' },
+      { id: '2UuGgPNM1KM', title: 'The Dark Story of Australia’s Legendary Rock Band', label: 'Music documentary · Battle For Melody' },
+      { id: '9aI0OzNuIKY', title: 'The 6 Worst Wingsuit Pilot Accidents In History', label: 'Documentary · Extreme Edge Stories' },
+    ]},
+  ];
+
+  const videoTestimonials = [
+    { src: '/testimonials/pj-cranley-weiland.mp4', poster: '/testimonials/pj-cranley-weiland.jpg', title: 'Pj Cranley Weiland', label: 'Business coach · TEDx speaker' },
+    { src: '/testimonials/daniel-toth.mp4', poster: '/testimonials/daniel-toth.jpg', title: 'Daniel Toth', label: 'CEO · Rimark' },
+    { videoId: 'wbKrc78hidU', title: 'Crystal Mae', label: 'Influencer' },
+    { src: '/testimonials/brown-boy-travels.mp4', poster: '/testimonials/brown-boy-travels.jpg', title: 'Brown Boy Travels', label: 'Travel creator' },
+  ];
+
+  const reviews = [
+    { text: 'Ammaz was really great to work with. He responded quickly, was extremely thorough, and delivered high-quality work. I was really impressed by the amount of time he put into understanding our branding and messaging to make sure the edits he made were aligned. I’m extremely pleased with the results and will definitely hire him in the future.', context: 'VSL editing' },
+    { text: 'Ammaz understood our business, working with us to build a highly engaging motion graphics explainer video regarding our cryptocurrency. He went above and beyond to deliver a video that we are extremely happy with. Don’t go anywhere else or you will regret it.', context: 'Crypto explainer video' },
+    { text: 'Working with Ammaz was an absolute pleasure! From start to finish, they demonstrated exceptional creativity, professionalism, and attention to detail. Ammaz took the time to understand our vision and turned it into a visually stunning masterpiece.', context: 'B2B tech marketing agency' },
+    { text: 'Ammaz did a great job creating a VSL for us. We provided the content, he created a prototype, we came back with edits and notes, and he took care of them all, making a nice video about our interactive displays. Will use Ammaz again when our next video project comes up!', context: 'Product VSL' },
+    { text: 'I had a great experience working with Ammaz. His clear and prompt communication made the entire process smooth and efficient, and what he produced was high quality and fit our brand’s aesthetics.', context: 'TV promo' },
+    { text: 'Absolutely amazing experience! Ammaz came through for me on a last-minute business presentation and nailed it perfectly. He was punctual, communicated clearly, and quickly incorporated all my feedback.', context: 'Business presentation' },
+    { text: 'Ammaz did a great job on editing and providing motion graphics for our company videos. Very communicative and responsive to adjustments with delivery in a timely manner. Highly recommend.', context: 'Company videos' },
+    { text: 'Ammaz is fantastic to work with. Very communicative, detail oriented, and quick to update edits. Highly recommend.', context: 'YouTube documentary editing' },
+    { text: 'Ammaz was a pleasure to work with. He was always prompt, listened to our feedback and was patient as this was a learning curve for us. I would happily recommend Ammaz for YouTube ads and video training editing.', context: 'YouTube video ad' },
+    { text: 'Work with Ammaz. You will not be disappointed. This will be the first of many projects with him.', context: 'Marketing agency video ads' },
+    { text: 'Great skills. Was very responsive and open to applying feedback until we got it right. Once we had the first video where we needed it he was quickly able to produce the others.', context: 'Meta ads for a chiropractic clinic' },
+    { text: 'Muhammad is very helpful. He helped us to make this product advert video with some 3D animation effects. I highly recommend him to create videos for people.', context: 'Product promo with 3D animation' },
+    { text: 'Great output and efficient process of feedback and edits. End result was right on point and very strong match to original vision.', context: 'Veterinary business video' },
+    { text: 'Ammaz was absolutely fantastic and extremely talented. He was professional every step of the way and I really enjoyed working with him.', context: 'Engagement video' },
+    { text: 'Ammaz did a great job at editing our short VSL. I would highly recommend anyone who is looking to get their VSL edited to reach out to Ammaz.', context: 'Video sales letter' },
+    { text: 'Ammaz did a great job on editing and providing motion graphics for our VSL landing page and onboarding video. Great work and communicated on a timely manner.', context: 'VSL and onboarding video' },
+    { text: 'Great work and very efficient! Video was completed to a high standard and all feedback applied.', context: 'Aviation company reel' },
+    { text: 'Ammaz is an excellent contractor and I will definitely work with him again.', context: 'Psychologist and author' },
+  ];
+
+  const howItWorks = [
+    { icon: <Phone size={24} />, who: 'CreativeFlic', title: 'Strategy call', desc: 'We map the first videos your buyers need to see before they buy, and the keywords they search to find them.' },
+    { icon: <Mic size={24} />, who: 'You, with our guidance', title: 'You record, about 2–3 hours a week', desc: 'Send talking points or record with our scripts and on-camera guidance. Faceless formats need no filming at all.' },
+    { icon: <Rocket size={24} />, who: 'CreativeFlic', title: 'We do the rest', desc: 'Editing, motion graphics, thumbnails, titles, publishing and tracking which videos bring in leads and sales.' },
+  ];
+
+  const faqs = [
+    { q: 'Why YouTube?', a: 'Your buyers research before they buy, and YouTube is where they do it. Unlike paid ads, a video keeps ranking and selling for years, so your cost per customer falls over time instead of rising.' },
+    { q: 'Do I need a big audience for this to work?', a: 'No. We build for search and buyer intent, not virality. A small channel that answers the questions your buyers type into YouTube can bring in qualified leads long before it has a big subscriber count.' },
+    { q: 'How much of my time does this take?', a: 'About 2–3 hours a week of recording, or none at all for faceless formats. You approve the plan and the scripts. We handle topics, editing, thumbnails, SEO and publishing.' },
+    { q: 'Do I need to come up with the content ideas?', a: 'No. We research what your buyers search, plan the topics, and write the scripts. You review and approve.' },
+    { q: 'How is this different from hiring a video editor?', a: 'An editor waits for footage and direction. We own the whole loop: strategy, scripts, production, publishing and reporting, so you get a channel that is built to sell, not just edited videos.' },
+    { q: 'What results can I expect, and when?', a: 'YouTube compounds, it does not spike. Expect foundation work and your first 8 videos in months 1 to 2, winning formats by month 3, and first leads in months 4 to 6. We never promise view counts. We report the leading indicators weekly so you see progress from day one.' },
+    { q: 'Who owns the channel and content?', a: 'You do. The channel, the videos and the data are 100% yours from day one.' },
+    { q: 'How quickly can we start?', a: 'Usually within a week of the strategy call. Start with the free audit and we will show you the first 5 videos we would make.' },
+  ];
+
+  const [openFaq, setOpenFaq] = useState<number | null>(0);
+  const [sampleTab, setSampleTab] = useState(0);
+  const [openCase, setOpenCase] = useState<number | null>(null);
+  const [showAllReviews, setShowAllReviews] = useState(false);
+
+  const isLawPage = typeof window !== 'undefined' && window.location.pathname.replace(/\/+$/, '') === '/law-firms';
+
   if (loading) {
     return (
       <div className={`min-h-screen font-sans ${theme.bg}`}>
@@ -271,6 +452,8 @@ const App = () => {
       </div>
     );
   }
+
+  if (isLawPage) return <LawFirmsPage />;
 
   return (
     <div className={`min-h-screen font-sans selection:bg-blue-600 selection:text-white overflow-x-hidden transition-colors duration-500 ${theme.bg} ${theme.text}`}>
@@ -390,9 +573,15 @@ const App = () => {
               </p>
             </Reveal>
 
+            <Reveal delay={230} variant="fade-up">
+              <div className="mb-12">
+                <FounderVideo videoId="lFLgvsUs8Eo" caption="Meet Ammaz · How CreativeFlic works · 2:47" isDark={isDark} />
+              </div>
+            </Reveal>
+
             <Reveal delay={250} variant="fade-up">
               <div className="mb-11">
-                <div className={`text-[10px] font-bold uppercase tracking-[0.3em] mb-4 ${isDark ? 'text-neutral-600' : 'text-neutral-500'}`}>For Product Brands $1M–$20M</div>
+                <div className={`text-[10px] font-bold uppercase tracking-[0.3em] mb-4 ${isDark ? 'text-neutral-600' : 'text-neutral-500'}`}>For Product Brands $1M–$20M & Expert-Led Firms</div>
                 <div className="flex flex-wrap justify-center gap-2">
                   {[
                     { icon: <ShoppingCart size={13} />, label: 'Ecommerce' },
@@ -400,6 +589,7 @@ const App = () => {
                     { icon: <Coins size={13} />, label: 'Finance' },
                     { icon: <Cloud size={13} />, label: 'B2B SaaS' },
                     { icon: <Building2 size={13} />, label: 'Real Estate' },
+                    { icon: <Scale size={13} />, label: 'Law & Professional Services' },
                   ].map((n, i) => (
                     <span key={i} className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border text-xs font-medium transition-all duration-300 hover:-translate-y-0.5 cursor-default ${isDark ? 'border-white/10 bg-white/[0.03] text-neutral-300 hover:border-blue-500/60 hover:text-blue-300' : 'border-black/10 bg-black/[0.02] text-neutral-700 hover:border-blue-500 hover:text-blue-700'}`}>
                       <span className={accentText}>{n.icon}</span> {n.label}
@@ -415,6 +605,11 @@ const App = () => {
                   Get Your Free Revenue Audit
                   <ArrowRight size={17} className="group-hover:translate-x-1 transition-transform" />
                 </button>
+                {BOOKING_URL && (
+                  <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" onClick={() => track('book_call_click', { page: 'home' })} className={`px-9 py-4 rounded-full border transition-all duration-300 font-semibold tracking-wide inline-flex items-center gap-2 ${isDark ? 'border-white/15 hover:border-white/40 text-neutral-300 hover:text-white' : 'border-black/15 hover:border-black/40 text-neutral-700 hover:text-black'}`}>
+                    <Calendar size={17} /> Book a Call
+                  </a>
+                )}
                 <button onClick={() => scrollToSection('work')} className={`px-9 py-4 rounded-full border transition-all duration-300 font-semibold tracking-wide active:scale-95 ${isDark ? 'border-white/15 hover:border-white/40 text-neutral-300 hover:text-white' : 'border-black/15 hover:border-black/40 text-neutral-700 hover:text-black'}`}>
                   See The Results
                 </button>
@@ -428,8 +623,8 @@ const App = () => {
               <div className={`mt-16 pt-10 border-t grid grid-cols-3 max-w-2xl mx-auto ${isDark ? 'border-white/10' : 'border-black/10'}`}>
                 {[
                   { end: 5.5, decimals: 1, prefix: '$', suffix: 'M', label: 'Client revenue scaled' },
-                  { end: 50, decimals: 0, prefix: '', suffix: 'M+', label: 'Organic views generated' },
-                  { end: 100, decimals: 0, prefix: '', suffix: 'K+', label: 'Subscribers built' },
+                  { end: 100, decimals: 0, prefix: '', suffix: 'M+', label: 'Organic views generated' },
+                  { end: 136, decimals: 0, prefix: '', suffix: 'K+', label: 'Subscribers on one channel' },
                 ].map((s, i) => (
                   <div key={i} className={`px-4 ${i > 0 ? (isDark ? 'border-l border-white/10' : 'border-l border-black/10') : ''}`}>
                     <div className={`w-5 h-0.5 mx-auto mb-3 ${isDark ? 'bg-yellow-400/80' : 'bg-yellow-500'}`}></div>
@@ -465,7 +660,7 @@ const App = () => {
               </div>
                 <WordReveal as="h3" text="Real Systems. Real ROI." className="text-4xl md:text-5xl font-bold mb-3" stagger={50} />
                 <p className={`${theme.textMuted} max-w-xl`}>
-                  Every client runs the same machine, strategy to attribution, and every engagement is judged on ROI.
+                  Every client runs the same machine, strategy to publishing, and every engagement is judged on results.
                 </p>
               </div>
             </div>
@@ -474,9 +669,113 @@ const App = () => {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {caseStudies.map((project, index) => (
               <Reveal key={index} delay={index * 120} variant="fade-up" className={project.featured ? 'md:col-span-2' : ''}>
-                <ProjectCard {...project} isDark={isDark} />
+                <ProjectCard {...project} isDark={isDark} onOpen={() => { setOpenCase(index); track('case_study_open', { case: project.mark }); }} />
               </Reveal>
             ))}
+          </div>
+        </div>
+      </section>
+
+      <CaseStudyModal
+        study={openCase === null ? null : caseStudies[openCase]}
+        isDark={isDark}
+        onClose={() => setOpenCase(null)}
+        onCta={() => { setOpenCase(null); setTimeout(() => scrollToSection('contact'), 50); }}
+      />
+
+      {/* SEE THE WORK */}
+      <section id="samples" className={`py-24 relative overflow-hidden ${isDark ? 'bg-black' : 'bg-white'}`}>
+        <div className="container mx-auto px-6 relative z-10">
+          <Reveal variant="creative-up">
+            <div className="text-center max-w-3xl mx-auto mb-14">
+              <div className={`flex items-center justify-center gap-4 mb-5`}>
+                <span className={`h-px w-8 ${isDark ? 'bg-yellow-400/50' : 'bg-yellow-500/60'}`}></span>
+                <h2 className={`${kicker} font-semibold uppercase tracking-[0.3em] text-xs`}>02 · See The Work</h2>
+                <span className={`h-px w-8 ${isDark ? 'bg-yellow-400/50' : 'bg-yellow-500/60'}`}></span>
+              </div>
+              <WordReveal as="h3" text="Real Videos. Judge the Work Yourself." className="text-4xl md:text-5xl font-bold mb-6" stagger={50} />
+              <p className={theme.textMuted}>Complex products, legal questions and big stories, made worth watching. Press play on any of them.</p>
+            </div>
+          </Reveal>
+          <div className="flex flex-wrap justify-center gap-2 mb-10" role="tablist" aria-label="Work samples by industry">
+            {sampleTabs.map((t, i) => (
+              <button
+                key={t.label}
+                type="button"
+                role="tab"
+                aria-selected={sampleTab === i}
+                onClick={() => setSampleTab(i)}
+                className={`px-4 py-2 rounded-full border text-xs font-semibold tracking-wide transition-all duration-300 ${sampleTab === i ? 'bg-blue-600 border-blue-600 text-white' : isDark ? 'border-white/15 text-neutral-300 hover:border-white/40' : 'border-black/15 text-neutral-700 hover:border-black/40'}`}
+              >
+                {t.label}
+              </button>
+            ))}
+          </div>
+          <div key={sampleTab} className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-10 max-w-6xl mx-auto">
+            {sampleTabs[sampleTab].videos.map((v, i) => (
+              <Reveal key={v.id} delay={(i % 3) * 100} variant="fade-up">
+                <VideoTile videoId={v.id} title={v.title} label={v.label} isDark={isDark} />
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CLIENT VOICES */}
+      <section id="testimonials" className={`py-24 relative overflow-hidden ${theme.sectionBg}`}>
+        <div className="container mx-auto px-6 relative z-10">
+          <Reveal variant="creative-up">
+            <div className="text-center max-w-3xl mx-auto mb-14">
+              <div className={`flex items-center justify-center gap-4 mb-5`}>
+                <span className={`h-px w-8 ${isDark ? 'bg-yellow-400/50' : 'bg-yellow-500/60'}`}></span>
+                <h2 className={`${kicker} font-semibold uppercase tracking-[0.3em] text-xs`}>03 · Client Voices</h2>
+                <span className={`h-px w-8 ${isDark ? 'bg-yellow-400/50' : 'bg-yellow-500/60'}`}></span>
+              </div>
+              <WordReveal as="h3" text="Don’t Take Our Word for It" className="text-4xl md:text-5xl font-bold mb-6" stagger={50} />
+              <p className={theme.textMuted}>Straight from the people we have built videos for.</p>
+            </div>
+          </Reveal>
+          <Reveal variant="fade-up">
+            <div className={`flex flex-wrap justify-center items-center gap-x-8 gap-y-3 mb-14 text-sm ${theme.textMuted}`}>
+              <span className="flex items-center gap-1.5">
+                {[0, 1, 2, 3, 4].map((i) => <Star key={i} size={15} className="text-yellow-400" fill="currentColor" />)}
+                <span className={`ml-1 font-bold ${theme.text}`}>4.9</span> from 82 client reviews
+              </span>
+              <span><span className={`font-bold ${theme.text}`}>97%</span> job success</span>
+              <span><span className={`font-bold ${theme.text}`}>146</span> projects delivered</span>
+              <span><span className={`font-bold ${theme.text}`}>Top Rated Plus</span> on Upwork</span>
+            </div>
+          </Reveal>
+
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 max-w-6xl mx-auto mb-14">
+            {videoTestimonials.map((v, i) => (
+              <Reveal key={i} delay={i * 100} variant="fade-up">
+                <VideoTile videoId={v.videoId} src={v.src} poster={v.poster} title={v.title} label={v.label} isDark={isDark} vertical />
+              </Reveal>
+            ))}
+          </div>
+
+          <div className="max-w-6xl mx-auto">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {reviews.slice(0, showAllReviews ? reviews.length : 6).map((r, i) => (
+                <Reveal key={i} delay={(i % 3) * 80} variant="fade-up" className="h-full">
+                  <div className={`p-6 rounded-2xl border h-full flex flex-col ${isDark ? 'bg-neutral-900/60 border-neutral-800' : 'bg-white border-neutral-200 shadow-sm'}`}>
+                    <div className="flex gap-0.5 mb-3">
+                      {[0, 1, 2, 3, 4].map((k) => <Star key={k} size={13} className="text-yellow-400" fill="currentColor" />)}
+                    </div>
+                    <p className={`text-sm leading-relaxed flex-grow ${theme.text}`}>“{r.text}”</p>
+                    <div className={`mt-4 text-[11px] uppercase tracking-[0.15em] ${isDark ? 'text-neutral-500' : 'text-neutral-600'}`}>Verified client · {r.context}</div>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
+            {!showAllReviews && (
+              <div className="text-center mt-8">
+                <button type="button" onClick={() => setShowAllReviews(true)} className={`px-7 py-3 rounded-full border font-semibold text-sm transition-all duration-300 ${isDark ? 'border-white/15 hover:border-white/40 text-neutral-300 hover:text-white' : 'border-black/15 hover:border-black/40 text-neutral-700 hover:text-black'}`}>
+                  Show all {reviews.length} reviews
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </section>
@@ -488,7 +787,7 @@ const App = () => {
             <div className="text-center max-w-3xl mx-auto mb-16">
               <div className={`flex items-center justify-center gap-4 mb-5`}>
                 <span className={`h-px w-8 ${isDark ? 'bg-yellow-400/50' : 'bg-yellow-500/60'}`}></span>
-                <h2 className={`${kicker} font-semibold uppercase tracking-[0.3em] text-xs`}>02 · The Revenue System</h2>
+                <h2 className={`${kicker} font-semibold uppercase tracking-[0.3em] text-xs`}>04 · The Revenue System</h2>
                 <span className={`h-px w-8 ${isDark ? 'bg-yellow-400/50' : 'bg-yellow-500/60'}`}></span>
               </div>
               <WordReveal as="h3" text="Not an Editing Agency. A Revenue System." className="text-4xl md:text-5xl font-bold mb-6" stagger={50} />
@@ -533,7 +832,7 @@ const App = () => {
             <div className="text-center max-w-3xl mx-auto">
               <div className={`flex items-center justify-center gap-4 mb-5`}>
                 <span className={`h-px w-8 ${isDark ? 'bg-yellow-400/50' : 'bg-yellow-500/60'}`}></span>
-                <h2 className={`${kicker} font-semibold uppercase tracking-[0.3em] text-xs`}>03 · Inside The Engine Room</h2>
+                <h2 className={`${kicker} font-semibold uppercase tracking-[0.3em] text-xs`}>05 · Inside The Engine Room</h2>
                 <span className={`h-px w-8 ${isDark ? 'bg-yellow-400/50' : 'bg-yellow-500/60'}`}></span>
               </div>
               <WordReveal as="h3" text="Watch The System Work" className="text-4xl md:text-5xl font-bold mb-6" stagger={60} />
@@ -546,6 +845,38 @@ const App = () => {
         <WorkDemo isDark={isDark} />
       </section>
 
+      {/* HOW IT WORKS */}
+      <section id="how" className={`py-24 ${isDark ? 'bg-black' : 'bg-white'}`}>
+        <div className="container mx-auto px-6">
+          <Reveal variant="creative-up">
+            <div className="text-center max-w-3xl mx-auto mb-14">
+              <div className={`flex items-center justify-center gap-4 mb-5`}>
+                <span className={`h-px w-8 ${isDark ? 'bg-yellow-400/50' : 'bg-yellow-500/60'}`}></span>
+                <h2 className={`${kicker} font-semibold uppercase tracking-[0.3em] text-xs`}>06 · How It Works</h2>
+                <span className={`h-px w-8 ${isDark ? 'bg-yellow-400/50' : 'bg-yellow-500/60'}`}></span>
+              </div>
+              <WordReveal as="h3" text="Three Steps. Almost None of Them Yours." className="text-4xl md:text-5xl font-bold mb-6" stagger={50} />
+              <p className={theme.textMuted}>You bring the expertise. We turn it into a channel that sells.</p>
+            </div>
+          </Reveal>
+          <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+            {howItWorks.map((step, i) => (
+              <Reveal key={i} delay={i * 120} variant="fade-up" className="h-full">
+                <div className={`p-7 rounded-3xl border h-full ${isDark ? 'bg-neutral-900 border-neutral-800' : 'bg-neutral-50 border-neutral-200'}`}>
+                  <div className="flex items-center justify-between mb-5">
+                    <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${theme.iconBg}`}>{step.icon}</div>
+                    <span className={`text-4xl font-black ${isDark ? 'text-neutral-800' : 'text-neutral-200'}`}>0{i + 1}</span>
+                  </div>
+                  <div className={`text-[10px] font-bold uppercase tracking-[0.2em] mb-2 ${kicker}`}>{step.who}</div>
+                  <h4 className={`text-xl font-bold mb-3 ${theme.text}`}>{step.title}</h4>
+                  <p className={`text-sm leading-relaxed ${theme.textMuted}`}>{step.desc}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* MILESTONE CURVE */}
       <section id="curve" className={`py-24 ${theme.sectionBg}`}>
         <div className="container mx-auto px-6">
@@ -553,7 +884,7 @@ const App = () => {
             <div className="text-center max-w-3xl mx-auto mb-16">
               <div className={`flex items-center justify-center gap-4 mb-5`}>
                 <span className={`h-px w-8 ${isDark ? 'bg-yellow-400/50' : 'bg-yellow-500/60'}`}></span>
-                <h2 className={`${kicker} font-semibold uppercase tracking-[0.3em] text-xs`}>04 · No Surprises</h2>
+                <h2 className={`${kicker} font-semibold uppercase tracking-[0.3em] text-xs`}>07 · No Surprises</h2>
                 <span className={`h-px w-8 ${isDark ? 'bg-yellow-400/50' : 'bg-yellow-500/60'}`}></span>
               </div>
               <WordReveal as="h3" text="Exactly What Happens, Month by Month" className="text-4xl md:text-5xl font-bold mb-6" stagger={50} />
@@ -594,7 +925,7 @@ const App = () => {
           <Reveal delay={300} variant="fade-up">
             <div className="mt-12 text-center">
               <p className={`text-sm max-w-2xl mx-auto ${theme.textMuted}`}>
-                You get a <span className={`font-bold ${theme.text}`}>weekly Loom update and a live dashboard</span> of leading indicators from day one: impressions velocity, CTR, retention, branded-search lift. From month 3: assisted conversions and coded revenue.
+                You get a <span className={`font-bold ${theme.text}`}>weekly Loom update and a live dashboard</span> from day one: impressions, click-through rate, retention, watch time and subscriber growth, plus the enquiries your videos bring in.
               </p>
             </div>
           </Reveal>
@@ -611,12 +942,12 @@ const App = () => {
             <div className="text-center max-w-3xl mx-auto mb-16">
               <div className={`flex items-center justify-center gap-4 mb-5`}>
                 <span className={`h-px w-8 ${isDark ? 'bg-yellow-400/50' : 'bg-yellow-500/60'}`}></span>
-                <h2 className={`${kicker} font-semibold uppercase tracking-[0.3em] text-xs`}>05 · Transparent Pricing</h2>
+                <h2 className={`${kicker} font-semibold uppercase tracking-[0.3em] text-xs`}>08 · Transparent Pricing</h2>
                 <span className={`h-px w-8 ${isDark ? 'bg-yellow-400/50' : 'bg-yellow-500/60'}`}></span>
               </div>
               <WordReveal as="h3" text="The Price of a Freelancer. The Standard of a Growth Agency." className="text-4xl md:text-5xl font-bold mb-6" stagger={45} />
               <p className={theme.textMuted}>
-                Full-stack agencies charge $10–30k/month for this scope. Freelancers can’t deliver it. We built our engine to close that gap. And beware anyone offering full service for under $1,500: that is the industry’s own red flag.
+                Full-stack agencies charge $10–30k/month for this scope. Freelancers can’t deliver it. We built our engine to close that gap. And be careful with anyone promising this full scope for under $1,500/month. That’s the industry’s own red flag.
               </p>
             </div>
           </Reveal>
@@ -627,10 +958,10 @@ const App = () => {
               <div className={`p-8 rounded-3xl border h-full flex flex-col transition-all duration-300 hover:-translate-y-2 spotlight-card ${theme.spotlightCard}`} onMouseMove={handleSpotlightMove}>
                 <div className={`text-xs font-black uppercase tracking-widest mb-2 ${accentText}`}>Step 1 · One-Time</div>
                 <h4 className={`text-2xl font-black mb-1 ${theme.text}`}>Strategy Sprint</h4>
-                <div className={`text-3xl font-black mb-6 ${theme.text}`}>$1,500<span className={`text-base font-bold ${theme.textMuted}`}>–$2,500</span></div>
-                <p className={`text-sm mb-6 ${theme.textMuted}`}>30 days. Everything needed before a single video ships.</p>
+                <div className={`text-3xl font-black mb-6 ${theme.text}`}>$1,950<span className={`text-base font-bold ${theme.textMuted}`}> one-time</span></div>
+                <p className={`text-sm mb-6 ${theme.textMuted}`}>30 days. Everything needed before a single video ships. <span className={`font-bold ${theme.text}`}>Credited in full against month 1 when you start a 6-month Engine plan.</span></p>
                 <ul className={`space-y-3 text-sm flex-grow ${theme.textMuted}`}>
-                  {['Audience research & keyword demand map', 'Channel architecture', '90-day content calendar', 'Attribution stack install (UTM + promo codes + GA4 + surveys)'].map((item, i) => (
+                  {['Audience research & keyword demand map', 'Channel architecture', '90-day content calendar', 'Title and thumbnail style for your channel'].map((item, i) => (
                     <li key={i} className="flex items-start gap-2">
                       <CheckCircle2 size={16} className="text-blue-500 mt-0.5 shrink-0" /> {item}
                     </li>
@@ -645,7 +976,7 @@ const App = () => {
                 <div className="absolute top-0 right-0 bg-yellow-400 text-black text-[10px] font-black uppercase tracking-widest px-4 py-1.5 rounded-bl-xl">Most Popular</div>
                 <div className={`text-xs font-black uppercase tracking-widest mb-2 ${accentText}`}>Step 2 · Monthly</div>
                 <h4 className={`text-2xl font-black mb-1 ${theme.text}`}>Revenue Engine</h4>
-                <div className={`text-3xl font-black mb-6 ${theme.text}`}>$3,500<span className={`text-base font-bold ${theme.textMuted}`}>–$4,500/mo</span></div>
+                <div className={`text-3xl font-black mb-6 ${theme.text}`}><span className={`text-base font-bold ${theme.textMuted}`}>From </span>$3,500<span className={`text-base font-bold ${theme.textMuted}`}>/mo</span></div>
                 <p className={`text-sm mb-6 ${theme.textMuted}`}>The full engine, running every month.</p>
                 <ul className={`space-y-3 text-sm flex-grow ${theme.textMuted}`}>
                   {['4 long-form videos + 8 shorts monthly', 'Thumbnails, titles & YouTube SEO', 'Publishing & full channel management', 'Live leading-indicator dashboard', 'Monthly strategy call'].map((item, i) => (
@@ -662,7 +993,7 @@ const App = () => {
               <div className={`p-8 rounded-3xl border h-full flex flex-col transition-all duration-300 hover:-translate-y-2 spotlight-card ${theme.spotlightCard}`} onMouseMove={handleSpotlightMove}>
                 <div className={`text-xs font-black uppercase tracking-widest mb-2 ${accentText}`}>Scale · Monthly</div>
                 <h4 className={`text-2xl font-black mb-1 ${theme.text}`}>Growth Engine</h4>
-                <div className={`text-3xl font-black mb-6 ${theme.text}`}>$5,500<span className={`text-base font-bold ${theme.textMuted}`}>–$6,500/mo</span></div>
+                <div className={`text-3xl font-black mb-6 ${theme.text}`}><span className={`text-base font-bold ${theme.textMuted}`}>From </span>$5,500<span className={`text-base font-bold ${theme.textMuted}`}>/mo</span></div>
                 <p className={`text-sm mb-6 ${theme.textMuted}`}>Everything in Revenue Engine, plus:</p>
                 <ul className={`space-y-3 text-sm flex-grow ${theme.textMuted}`}>
                   {['Repurposing pack: LinkedIn, IG and TikTok cuts', 'Ad-creative versions of winning videos', 'Light YouTube Ads amplification', 'Priority production queue'].map((item, i) => (
@@ -675,17 +1006,10 @@ const App = () => {
             </Reveal>
           </div>
 
-          <Reveal delay={300} variant="fade-up">
-            <div className={`mt-10 max-w-4xl mx-auto p-6 rounded-3xl border text-center ${isDark ? 'border-blue-900/50 bg-blue-950/20' : 'border-blue-200 bg-blue-50'}`}>
-              <p className={`text-sm ${theme.textMuted}`}>
-                <span className={`font-bold ${theme.text}`}>Skin in the game:</span> from month 4, a small performance fee applies only to <span className={`font-bold ${theme.text}`}>tracked, coded YouTube revenue</span>: capped, audited, and only when it works. We win when you win.
-              </p>
-            </div>
-          </Reveal>
 
           <Reveal delay={350} variant="fade-in">
             <p className={`mt-8 text-center text-xs ${isDark ? 'text-neutral-600' : 'text-neutral-500'}`}>
-              Not ready for the full engine? Ask about <span className="font-bold">Editing + Strategy Lite</span> from $1,200/mo.
+              Not ready for the full engine? <span className="font-bold">Editing + Strategy Lite from $1,200/mo</span>: editing plus a monthly content plan, without the full system.
             </p>
           </Reveal>
         </div>
@@ -698,7 +1022,7 @@ const App = () => {
             <div className="text-center max-w-3xl mx-auto mb-16">
               <div className={`flex items-center justify-center gap-4 mb-5`}>
                 <span className={`h-px w-8 ${isDark ? 'bg-yellow-400/50' : 'bg-yellow-500/60'}`}></span>
-                <h2 className={`${kicker} font-semibold uppercase tracking-[0.3em] text-xs`}>06 · Zero Fine Print</h2>
+                <h2 className={`${kicker} font-semibold uppercase tracking-[0.3em] text-xs`}>09 · Zero Fine Print</h2>
                 <span className={`h-px w-8 ${isDark ? 'bg-yellow-400/50' : 'bg-yellow-500/60'}`}></span>
               </div>
               <WordReveal as="h3" text="Built to Be the Safest Bet You Make" className="text-4xl md:text-5xl font-bold mb-6" stagger={50} />
@@ -749,12 +1073,12 @@ const App = () => {
             <div className="text-center max-w-3xl mx-auto mb-16">
               <div className={`flex items-center justify-center gap-4 mb-5`}>
                 <span className={`h-px w-8 ${isDark ? 'bg-yellow-400/50' : 'bg-yellow-500/60'}`}></span>
-                <h2 className={`${kicker} font-semibold uppercase tracking-[0.3em] text-xs`}>07 · We Are Selective</h2>
+                <h2 className={`${kicker} font-semibold uppercase tracking-[0.3em] text-xs`}>10 · We Are Selective</h2>
                 <span className={`h-px w-8 ${isDark ? 'bg-yellow-400/50' : 'bg-yellow-500/60'}`}></span>
               </div>
               <WordReveal as="h3" text="This Only Works for the Right Brand" className="text-4xl md:text-5xl font-bold mb-6" stagger={50} />
               <p className={theme.textMuted}>
-                We take on a limited number of engine clients so every channel gets a senior team. Here’s the honest filter.
+                We take on a limited number of engine clients so every channel gets senior attention. Here’s the honest filter.
               </p>
             </div>
           </Reveal>
@@ -790,6 +1114,63 @@ const App = () => {
               </div>
             </Reveal>
           </div>
+
+          {/* Services businesses */}
+          <Reveal delay={150} variant="fade-up">
+            <div id="services" className={`mt-10 max-w-5xl mx-auto p-8 md:p-10 rounded-3xl border ${isDark ? 'border-blue-900/50 bg-blue-950/20' : 'border-blue-200 bg-blue-50'}`}>
+              <div className="flex flex-col md:flex-row gap-8 items-start">
+                <div className={`w-14 h-14 rounded-2xl flex items-center justify-center shrink-0 ${theme.iconBg}`}>
+                  <Scale size={28} />
+                </div>
+                <div className="flex-grow">
+                  <h4 className={`text-2xl font-black mb-3 ${theme.text}`}>Also built for law firms and expert-led businesses</h4>
+                  <p className={`text-sm leading-relaxed mb-4 ${theme.textMuted}`}>
+                    Your clients search YouTube before they call anyone. We turn your expertise into a library of explainer videos that answers their questions, builds trust and sends consultations your way. You record once a month or send talking points, and we handle topics, editing, motion graphics, thumbnails, SEO and publishing.
+                  </p>
+                  <p className={`text-sm font-bold mb-6 ${theme.text}`}>
+                    500+ legal and tax videos produced for firms like Brenton C. McWilliams Law and R&D Tax Advisors.
+                  </p>
+                  <button onClick={() => scrollToSection('contact')} className={`btn-sheen inline-flex items-center gap-2 px-7 py-3 ${brandBlue} text-white font-bold rounded-full hover:bg-blue-500 transition-all duration-300 text-sm tracking-wide`}>
+                    Get Your Free Channel Audit <ArrowRight size={16} />
+                  </button>
+                  <a href="/law-firms/" className={`ml-4 inline-flex items-center gap-1.5 text-sm font-semibold ${accentText} hover:underline underline-offset-4`}>
+                    See how it works for law firms <ArrowRight size={14} />
+                  </a>
+                </div>
+              </div>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section id="faq" className={`py-24 ${theme.sectionBg}`}>
+        <div className="container mx-auto px-6">
+          <Reveal variant="creative-up">
+            <div className="text-center max-w-3xl mx-auto mb-14">
+              <div className={`flex items-center justify-center gap-4 mb-5`}>
+                <span className={`h-px w-8 ${isDark ? 'bg-yellow-400/50' : 'bg-yellow-500/60'}`}></span>
+                <h2 className={`${kicker} font-semibold uppercase tracking-[0.3em] text-xs`}>11 · Before We Talk</h2>
+                <span className={`h-px w-8 ${isDark ? 'bg-yellow-400/50' : 'bg-yellow-500/60'}`}></span>
+              </div>
+              <WordReveal as="h3" text="Good Questions. Straight Answers." className="text-4xl md:text-5xl font-bold mb-6" stagger={50} />
+              <p className={theme.textMuted}>The things founders and partners ask us most.</p>
+            </div>
+          </Reveal>
+          <div className="max-w-3xl mx-auto space-y-3">
+            {faqs.map((f, i) => {
+              const open = openFaq === i;
+              return (
+                <div key={i} className={`rounded-2xl border transition-colors ${open ? (isDark ? 'border-blue-500/50 bg-neutral-900' : 'border-blue-500 bg-white') : (isDark ? 'border-neutral-800 bg-neutral-900/40' : 'border-neutral-200 bg-white')}`}>
+                  <button type="button" onClick={() => setOpenFaq(open ? null : i)} aria-expanded={open} className="w-full flex items-center justify-between gap-4 p-5 text-left">
+                    <span className={`font-bold ${theme.text}`}>{f.q}</span>
+                    <ChevronDown size={18} className={`shrink-0 transition-transform duration-300 ${open ? 'rotate-180 text-blue-500' : theme.textMuted}`} />
+                  </button>
+                  {open && <p className={`px-5 pb-5 -mt-1 text-sm leading-relaxed ${theme.textMuted}`}>{f.a}</p>}
+                </div>
+              );
+            })}
+          </div>
         </div>
       </section>
 
@@ -814,10 +1195,10 @@ const App = () => {
             <div className="max-w-2xl mx-auto mb-10">
               <ul className="text-white/90 text-sm md:text-base space-y-3 text-left inline-block">
                 {[
-                  'What your competitors’ channels are earning them right now',
                   'The 20 keywords your buyers actually search on YouTube',
-                  'The first 5 videos your brand should make',
-                  'Your projected 12-month revenue curve'
+                  'Which competitor channels are winning your buyers’ attention, and why',
+                  'The search demand your brand is missing today',
+                  'The first 5 videos your brand should make'
                 ].map((item, i) => (
                   <li key={i} className="flex items-start gap-3">
                     <CheckCircle2 size={18} className="text-white mt-0.5 shrink-0" /> {item}
@@ -839,6 +1220,11 @@ const App = () => {
         <div className="container mx-auto px-6 relative z-10">
           <Reveal variant="fade-up">
             <ContactForm brandBlue={brandBlue} onSuccess={handleSuccess} isDark={isDark} />
+            {BOOKING_URL && (
+              <p className={`text-center mt-8 text-sm ${theme.textMuted}`}>
+                Prefer to talk? <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" onClick={() => track('book_call_click', { page: 'home' })} className={`font-semibold hover:underline ${accentText}`}>Book a 20-minute call</a>
+              </p>
+            )}
           </Reveal>
         </div>
       </section>
@@ -855,13 +1241,15 @@ const App = () => {
             <div className="flex flex-col md:flex-row gap-4 items-center text-center">
               <span>© 2026 CreativeFlic</span>
               <span className="hidden md:inline">•</span>
-              <span>YouTube Channels That Sell Your Product</span>
+              <span>YouTube Channels That Bring You Clients</span>
+              <span className="hidden md:inline">•</span>
+              <a href="/privacy.html" className={`underline-offset-4 hover:underline ${isDark ? 'hover:text-white' : 'hover:text-black'}`}>Privacy Policy</a>
             </div>
 
             <div className="flex gap-6">
-              <a href="#" className={`transition-colors hover:scale-110 duration-200 ${isDark ? 'text-neutral-400 hover:text-blue-500' : 'text-neutral-500 hover:text-blue-600'}`} aria-label="Instagram"><Instagram size={20} /></a>
-              <a href="#" className={`transition-colors hover:scale-110 duration-200 ${isDark ? 'text-neutral-400 hover:text-blue-500' : 'text-neutral-500 hover:text-blue-600'}`} aria-label="LinkedIn"><Linkedin size={20} /></a>
-              <a href="#" className={`transition-colors hover:scale-110 duration-200 ${isDark ? 'text-neutral-400 hover:text-blue-500' : 'text-neutral-500 hover:text-blue-600'}`} aria-label="Twitter"><Twitter size={20} /></a>
+              <a href="https://www.linkedin.com/company/creativeflic/" target="_blank" rel="noopener noreferrer" className={`transition-colors hover:scale-110 duration-200 ${isDark ? 'text-neutral-400 hover:text-blue-500' : 'text-neutral-500 hover:text-blue-600'}`} aria-label="CreativeFlic on LinkedIn"><Linkedin size={20} /></a>
+              <a href="https://www.instagram.com/creativeflic/" target="_blank" rel="noopener noreferrer" className={`transition-colors hover:scale-110 duration-200 ${isDark ? 'text-neutral-400 hover:text-blue-500' : 'text-neutral-500 hover:text-blue-600'}`} aria-label="CreativeFlic on Instagram"><Instagram size={20} /></a>
+              <a href="https://www.youtube.com/@Creativeflic-q3s" target="_blank" rel="noopener noreferrer" className={`transition-colors hover:scale-110 duration-200 ${isDark ? 'text-neutral-400 hover:text-blue-500' : 'text-neutral-500 hover:text-blue-600'}`} aria-label="CreativeFlic on YouTube"><Youtube size={20} /></a>
             </div>
           </div>
         </div>

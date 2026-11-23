@@ -18,7 +18,8 @@ const CountUp: React.FC<CountUpProps> = ({
   duration = 1800,
   className = ''
 }) => {
-  const [value, setValue] = useState(0);
+  // Start at the final value so slow loads, crawlers and screenshots never show 0.
+  const [value, setValue] = useState(end);
   const ref = useRef<HTMLSpanElement>(null);
   const started = useRef(false);
 
@@ -27,6 +28,7 @@ const CountUp: React.FC<CountUpProps> = ({
       ([entry]) => {
         if (entry.isIntersecting && !started.current) {
           started.current = true;
+          setValue(0);
           const t0 = performance.now();
           const tick = (now: number) => {
             const p = Math.min((now - t0) / duration, 1);
