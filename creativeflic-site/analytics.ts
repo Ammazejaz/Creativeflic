@@ -1,7 +1,7 @@
 // Our own site analytics (Google Analytics 4).
 // Paste the GA4 Measurement ID below (it looks like 'G-XXXXXXXXXX').
 // While it is empty, nothing loads and track() does nothing.
-export const GA_MEASUREMENT_ID = '';
+export const GA_MEASUREMENT_ID = 'G-S0T7HF3KDY';
 
 declare global {
   interface Window {
