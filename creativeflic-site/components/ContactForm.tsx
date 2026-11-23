@@ -192,6 +192,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ brandBlue, onSuccess, isDark 
         </button>
         <p className={`text-center text-xs ${isDark ? 'text-neutral-600' : 'text-neutral-500'}`}>
           We reply within 24 hours. Audits are limited to 6 per week, first come first served.
+          <br />By sending this you agree to our <a href="/privacy.html" className="underline underline-offset-2">Privacy Policy</a>. No spam, ever.
         </p>
       </form>
     </div>

@@ -4,7 +4,7 @@ import {
   X,
   Instagram,
   Linkedin,
-  Twitter,
+  Youtube,
   TrendingUp,
   ArrowUp,
   ArrowRight,
@@ -41,6 +41,7 @@ import SuccessOverlay from './components/SuccessOverlay';
 import Reveal from './components/Reveal';
 import ProjectCard from './components/ProjectCard';
 import CaseStudyModal from './components/CaseStudyModal';
+import { track } from './analytics';
 import WordReveal from './components/WordReveal';
 import WorkDemo from './components/WorkDemo';
 import CountUp from './components/CountUp';
@@ -140,6 +141,7 @@ const App = () => {
   }, [loading]);
 
   const handleSuccess = () => {
+    track('generate_lead', { form: 'free_audit' });
     setShowSuccessOverlay(true);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -174,11 +176,11 @@ const App = () => {
       },
       category: "Hearing Tech · Ecommerce",
       title: "HDC: A Full YouTube Engine for a Hearing Tech Brand",
-      role: "Strategy · Scripts · Production · Publishing · Attribution",
+      role: "Strategy · Scripts · Production · Publishing · Reporting",
       quote: { text: "Results better than expected.", by: "Client feedback · first engagement" },
-      results: ["Education-first channel for a considered health purchase", "One pipeline feeding organic content and ad creative", "Weekly reporting on leading indicators and coded sales"],
+      results: ["Education-first channel for a considered health purchase", "One pipeline feeding organic content and ad creative", "Weekly reporting on views, watch time and leads"],
       link: "https://heardirectclub.com/products/nova",
-      tags: ["Ecommerce", "Health Tech", "Attribution"],
+      tags: ["Ecommerce", "Health Tech", "Education"],
       metric: { value: "77.9K", label: "Organic views · 1.9K watch hours" }
     },
     {
@@ -237,6 +239,7 @@ const App = () => {
     {
       featured: true,
       mark: "TUNA",
+      shot: "/proof/tuna-analytics.jpg",
       thumbs: ["ukcyNGGO8uY", "UALcJDQyqOQ", "gVTPybaN1ro"],
       video: "ukcyNGGO8uY",
       detail: {
@@ -294,8 +297,8 @@ const App = () => {
     },
     {
       icon: <BarChart3 size={26} />,
-      title: 'Attribution',
-      desc: 'UTM links, promo codes, GA4 assisted conversions and post-purchase surveys, so you see coded revenue, not vanity views.'
+      title: 'Reporting',
+      desc: 'A weekly Loom update and a live dashboard: views, watch time, click-through, retention and the leads your videos bring in.'
     }
   ];
 
@@ -312,8 +315,8 @@ const App = () => {
     },
     {
       phase: 'Months 4–6',
-      title: 'First Coded Revenue',
-      points: ['Promo-code & UTM-tracked sales landing', 'Winning videos become ad creative', 'Performance-aligned pricing kicks in']
+      title: 'First Leads From YouTube',
+      points: ['Videos start ranking for buyer searches', 'Winning videos become ad creative', 'Enquiries arriving from your channel']
     },
     {
       phase: 'Months 6–12',
@@ -426,8 +429,8 @@ const App = () => {
     { q: 'Do I need a big audience for this to work?', a: 'No. We build for search and buyer intent, not virality. A small channel that answers the questions your buyers type into YouTube can bring in qualified leads long before it has a big subscriber count.' },
     { q: 'How much of my time does this take?', a: 'Very little. You approve the plan, then either send talking points or record in one batch session with our scripts. Faceless formats need no filming at all. We handle everything else.' },
     { q: 'Do I need to come up with the content ideas?', a: 'No. We research what your buyers search, plan the topics, and write the scripts. You review and approve.' },
-    { q: 'How is this different from hiring a video editor?', a: 'An editor waits for footage and direction. We own the whole loop: strategy, scripts, production, publishing and attribution, so you get a channel that is built to sell, not just edited videos.' },
-    { q: 'What results can I expect, and when?', a: 'YouTube compounds, it does not spike. Expect foundation work and your first 8 videos in months 1 to 2, winning formats by month 3, and first tracked revenue in months 4 to 6. We never promise view counts. We report the leading indicators weekly so you see progress from day one.' },
+    { q: 'How is this different from hiring a video editor?', a: 'An editor waits for footage and direction. We own the whole loop: strategy, scripts, production, publishing and reporting, so you get a channel that is built to sell, not just edited videos.' },
+    { q: 'What results can I expect, and when?', a: 'YouTube compounds, it does not spike. Expect foundation work and your first 8 videos in months 1 to 2, winning formats by month 3, and first leads in months 4 to 6. We never promise view counts. We report the leading indicators weekly so you see progress from day one.' },
     { q: 'Who owns the channel and content?', a: 'You do. The channel, the videos and the data are 100% yours from day one.' },
     { q: 'How quickly can we start?', a: 'Usually within a week of the strategy call. Start with the free audit and we will show you the first 5 videos we would make.' },
   ];
@@ -645,7 +648,7 @@ const App = () => {
               </div>
                 <WordReveal as="h3" text="Real Systems. Real ROI." className="text-4xl md:text-5xl font-bold mb-3" stagger={50} />
                 <p className={`${theme.textMuted} max-w-xl`}>
-                  Every client runs the same machine, strategy to attribution, and every engagement is judged on ROI.
+                  Every client runs the same machine, strategy to publishing, and every engagement is judged on results.
                 </p>
               </div>
             </div>
@@ -654,7 +657,7 @@ const App = () => {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {caseStudies.map((project, index) => (
               <Reveal key={index} delay={index * 120} variant="fade-up" className={project.featured ? 'md:col-span-2' : ''}>
-                <ProjectCard {...project} isDark={isDark} onOpen={() => setOpenCase(index)} />
+                <ProjectCard {...project} isDark={isDark} onOpen={() => { setOpenCase(index); track('case_study_open', { case: project.mark }); }} />
               </Reveal>
             ))}
           </div>
@@ -910,7 +913,7 @@ const App = () => {
           <Reveal delay={300} variant="fade-up">
             <div className="mt-12 text-center">
               <p className={`text-sm max-w-2xl mx-auto ${theme.textMuted}`}>
-                You get a <span className={`font-bold ${theme.text}`}>weekly Loom update and a live dashboard</span> of leading indicators from day one: impressions velocity, CTR, retention, branded-search lift. From month 3: assisted conversions and coded revenue.
+                You get a <span className={`font-bold ${theme.text}`}>weekly Loom update and a live dashboard</span> from day one: impressions, click-through rate, retention, watch time and subscriber growth, plus the enquiries your videos bring in.
               </p>
             </div>
           </Reveal>
@@ -946,7 +949,7 @@ const App = () => {
                 <div className={`text-3xl font-black mb-6 ${theme.text}`}>$1,950<span className={`text-base font-bold ${theme.textMuted}`}> one-time</span></div>
                 <p className={`text-sm mb-6 ${theme.textMuted}`}>30 days. Everything needed before a single video ships. <span className={`font-bold ${theme.text}`}>Credited in full against month 1 when you start a 6-month Engine plan.</span></p>
                 <ul className={`space-y-3 text-sm flex-grow ${theme.textMuted}`}>
-                  {['Audience research & keyword demand map', 'Channel architecture', '90-day content calendar', 'Attribution stack install (UTM + promo codes + GA4 + surveys)'].map((item, i) => (
+                  {['Audience research & keyword demand map', 'Channel architecture', '90-day content calendar', 'Title and thumbnail style for your channel'].map((item, i) => (
                     <li key={i} className="flex items-start gap-2">
                       <CheckCircle2 size={16} className="text-blue-500 mt-0.5 shrink-0" /> {item}
                     </li>
@@ -991,13 +994,6 @@ const App = () => {
             </Reveal>
           </div>
 
-          <Reveal delay={300} variant="fade-up">
-            <div className={`mt-10 max-w-4xl mx-auto p-6 rounded-3xl border text-center ${isDark ? 'border-blue-900/50 bg-blue-950/20' : 'border-blue-200 bg-blue-50'}`}>
-              <p className={`text-sm ${theme.textMuted}`}>
-                <span className={`font-bold ${theme.text}`}>Skin in the game:</span> from month 4, an optional performance fee on <span className={`font-bold ${theme.text}`}>tracked, coded YouTube revenue</span>. Capped, and only when it works. Details on the call.
-              </p>
-            </div>
-          </Reveal>
 
           <Reveal delay={350} variant="fade-in">
             <p className={`mt-8 text-center text-xs ${isDark ? 'text-neutral-600' : 'text-neutral-500'}`}>
@@ -1225,13 +1221,15 @@ const App = () => {
             <div className="flex flex-col md:flex-row gap-4 items-center text-center">
               <span>© 2026 CreativeFlic</span>
               <span className="hidden md:inline">•</span>
-              <span>YouTube Channels That Sell Your Product</span>
+              <span>YouTube Channels That Bring You Clients</span>
+              <span className="hidden md:inline">•</span>
+              <a href="/privacy.html" className={`underline-offset-4 hover:underline ${isDark ? 'hover:text-white' : 'hover:text-black'}`}>Privacy Policy</a>
             </div>
 
             <div className="flex gap-6">
-              <a href="#" className={`transition-colors hover:scale-110 duration-200 ${isDark ? 'text-neutral-400 hover:text-blue-500' : 'text-neutral-500 hover:text-blue-600'}`} aria-label="Instagram"><Instagram size={20} /></a>
-              <a href="#" className={`transition-colors hover:scale-110 duration-200 ${isDark ? 'text-neutral-400 hover:text-blue-500' : 'text-neutral-500 hover:text-blue-600'}`} aria-label="LinkedIn"><Linkedin size={20} /></a>
-              <a href="#" className={`transition-colors hover:scale-110 duration-200 ${isDark ? 'text-neutral-400 hover:text-blue-500' : 'text-neutral-500 hover:text-blue-600'}`} aria-label="Twitter"><Twitter size={20} /></a>
+              <a href="https://www.linkedin.com/company/creativeflic/" target="_blank" rel="noopener noreferrer" className={`transition-colors hover:scale-110 duration-200 ${isDark ? 'text-neutral-400 hover:text-blue-500' : 'text-neutral-500 hover:text-blue-600'}`} aria-label="CreativeFlic on LinkedIn"><Linkedin size={20} /></a>
+              <a href="https://www.instagram.com/creativeflic/" target="_blank" rel="noopener noreferrer" className={`transition-colors hover:scale-110 duration-200 ${isDark ? 'text-neutral-400 hover:text-blue-500' : 'text-neutral-500 hover:text-blue-600'}`} aria-label="CreativeFlic on Instagram"><Instagram size={20} /></a>
+              <a href="https://www.youtube.com/@Creativeflic-q3s" target="_blank" rel="noopener noreferrer" className={`transition-colors hover:scale-110 duration-200 ${isDark ? 'text-neutral-400 hover:text-blue-500' : 'text-neutral-500 hover:text-blue-600'}`} aria-label="CreativeFlic on YouTube"><Youtube size={20} /></a>
             </div>
           </div>
         </div>

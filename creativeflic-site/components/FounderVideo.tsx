@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Play } from 'lucide-react';
+import { track } from '../analytics';
 
 interface FounderVideoProps {
   videoId: string;
@@ -29,7 +30,7 @@ const FounderVideo: React.FC<FounderVideoProps> = ({ videoId, caption, isDark })
         ) : (
           <button
             type="button"
-            onClick={() => setPlaying(true)}
+            onClick={() => { setPlaying(true); track('video_play', { video: videoId, title: 'founder_intro' }); }}
             className="group absolute inset-0 w-full h-full"
             aria-label={`Play video: ${caption}`}
           >

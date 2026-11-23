@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Play } from 'lucide-react';
+import { track } from '../analytics';
 
 interface VideoTileProps {
   videoId?: string;
@@ -30,7 +31,7 @@ const VideoTile: React.FC<VideoTileProps> = ({ videoId, src, poster, title, labe
             allowFullScreen
           />
         ) : (
-          <button type="button" onClick={() => setPlaying(true)} className="absolute inset-0 w-full h-full" aria-label={`Play video: ${title}`}>
+          <button type="button" onClick={() => { setPlaying(true); track('video_play', { video: videoId || src, title }); }} className="absolute inset-0 w-full h-full" aria-label={`Play video: ${title}`}>
             <img
               src={poster || `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`}
               alt=""

@@ -52,7 +52,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ category, title, tags, result
           <div className="absolute inset-0 bg-gradient-to-br from-[#0c1834] via-[#080f22] to-black"></div>
 
           {shot ? (
-            <img src={shot} alt={`${title}: real YouTube Studio analytics`} loading="lazy" className="absolute inset-0 w-full h-full object-cover object-right-top opacity-80 transition-transform duration-700 group-hover:scale-[1.04]" />
+            <img src={shot} alt={`${title}: real YouTube Studio analytics`} loading="lazy" className="absolute inset-0 w-full h-full object-cover object-top opacity-80 transition-transform duration-700 group-hover:scale-[1.04]" />
           ) : grid.length > 0 ? (
             <div className={`absolute inset-0 grid ${grid.length >= 4 ? 'grid-cols-2 grid-rows-2' : grid.length === 3 ? 'grid-cols-3' : 'grid-cols-2'} gap-px`}>
               {grid.map((id) => (
