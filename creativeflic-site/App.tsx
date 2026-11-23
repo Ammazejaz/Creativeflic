@@ -389,7 +389,7 @@ const App = () => {
 
   const videoTestimonials = [
     { src: '/testimonials/pj-cranley-weiland.mp4', poster: '/testimonials/pj-cranley-weiland.jpg', title: 'Pj Cranley Weiland', label: 'Business coach · TEDx speaker' },
-    { videoId: 'Ui6A-wQDerw', title: 'In her own words', label: 'Client testimonial' },
+    { src: '/testimonials/daniel-toth.mp4', poster: '/testimonials/daniel-toth.jpg', title: 'Daniel Toth', label: 'CEO · Rimark' },
     { videoId: 'wbKrc78hidU', title: 'Crystal Mae', label: 'Influencer' },
     { src: '/testimonials/brown-boy-travels.mp4', poster: '/testimonials/brown-boy-travels.jpg', title: 'Brown Boy Travels', label: 'Travel creator' },
   ];
