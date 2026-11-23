@@ -346,12 +346,13 @@ const App = () => {
       { id: '68tKi1QjSBQ', title: 'This AI Will Replace All Sales Agencies', label: 'B2B SaaS · Salesforge' },
       { id: 'cOgay6dZ0NM', title: 'Alabama’s Hidden 90-Day Trust Rule', label: 'Law firm · Brenton C. McWilliams' },
       { id: 'rZEyxn1wi-0', title: 'How Much Do Hearing Aids Cost in 2026?', label: 'DTC health · HearDirectClub' },
-      { id: 'nWvDvRGxbyk', title: 'The Easiest Way to Start Earning in Payments', label: 'Fintech · Zenti / Profit from Payments' },
+      { id: 'tbswXCkh6ug', title: 'The Dating Expert: “I’ve Helped 4,000 Men Find Love”', label: 'Podcast · The Passionate Few · 326K subs' },
     ]},
     { label: 'B2B & SaaS', videos: [
       { id: '68tKi1QjSBQ', title: 'This AI Will Replace All Sales Agencies', label: 'B2B SaaS · Salesforge' },
       { id: 'OC3OZpGIxew', title: 'What I Learned From Sending 10,000 Terrible Cold Emails', label: 'B2B SaaS · Salesforge' },
       { id: 'nWvDvRGxbyk', title: 'The Easiest Way to Start Earning in Payments', label: 'Fintech · Zenti / Profit from Payments' },
+      { id: 'Sa_NBfWW510', title: 'If You Run Facebook Ads… Everything Just Changed', label: 'Founder content · Perform Digital Media' },
     ]},
     { label: 'Law & Finance', videos: [
       { id: 'cOgay6dZ0NM', title: 'Alabama’s Hidden 90-Day Trust Rule', label: 'Law firm · Brenton C. McWilliams' },
@@ -362,6 +363,17 @@ const App = () => {
       { id: '87XQIwoZ6pg', title: 'Money Ball: Levi vs Eric', label: 'Creator · Lively Lewis Show · 6M+ subs' },
       { id: '1-4xo4G2PQw', title: 'What Really Happens When I Take My Family to Costco', label: 'Creator · Heather McDonald' },
       { id: 'tbswXCkh6ug', title: 'The Dating Expert: “I’ve Helped 4,000 Men Find Love”', label: 'Podcast · The Passionate Few · 326K subs' },
+      { id: 'HtexMiTvGaA', title: 'Ticket Mastery: Expert VSL', label: 'Expert VSL · Personal brand' },
+      { id: 'IBdWTuDaYio', title: 'The Hidden Gem of Italy: Procida', label: 'Travel documentary · Brown Boy Travels' },
+      { id: 'IKGGi1_E_Po', title: 'Talking-Head VSL with Motion Graphics', label: 'On-camera VSL · Personal brand' },
+    ]},
+    { label: 'Agencies & VSLs', videos: [
+      { id: 'Sa_NBfWW510', title: 'If You Run Facebook Ads… Everything Just Changed', label: 'Founder content · Perform Digital Media' },
+      { id: 'E7ZSXLfMous', title: 'Motion Graphics VSL', label: 'Agency VSL · Shoreline Social Media Group' },
+      { id: '0suPsGTZxNU', title: 'Creative Agency Promo', label: 'Agency promo · Revonish' },
+      { id: 'nMg9qYcJISg', title: 'Premium Offer Magnet VSL', label: 'Lead-magnet VSL' },
+      { id: 'gXgLKrPLS8Y', title: 'Video Sales Letter with Motion Graphics', label: 'Motion graphics VSL' },
+      { id: 'NfyIRolMxOY', title: 'SciatiEase Conversion VSL', label: 'VSL · SciatiEase · $5.5M brand' },
     ]},
     { label: 'DTC & Health', videos: [
       { id: 'rZEyxn1wi-0', title: 'How Much Do Hearing Aids Cost in 2026?', label: 'DTC health · HearDirectClub' },
