@@ -41,6 +41,7 @@ import WorkDemo from './components/WorkDemo';
 import CountUp from './components/CountUp';
 import Parallax from './components/Parallax';
 import ContactForm from './components/ContactForm';
+import FounderVideo from './components/FounderVideo';
 
 const App = () => {
   const [loading, setLoading] = useState(true);
@@ -410,6 +411,12 @@ const App = () => {
               <p className={`text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed ${theme.textMuted}`}>
                 The entire YouTube engine, done for you. <span className={`font-semibold ${theme.text}`}>Freelancer price. Growth-agency standard.</span>
               </p>
+            </Reveal>
+
+            <Reveal delay={230} variant="fade-up">
+              <div className="mb-12">
+                <FounderVideo videoId="lFLgvsUs8Eo" caption="Meet Ammaz · How CreativeFlic works · 2:47" isDark={isDark} />
+              </div>
             </Reveal>
 
             <Reveal delay={250} variant="fade-up">
