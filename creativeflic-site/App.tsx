@@ -40,6 +40,7 @@ import InfiniteTicker from './components/InfiniteTicker';
 import SuccessOverlay from './components/SuccessOverlay';
 import Reveal from './components/Reveal';
 import ProjectCard from './components/ProjectCard';
+import CaseStudyModal from './components/CaseStudyModal';
 import WordReveal from './components/WordReveal';
 import WorkDemo from './components/WorkDemo';
 import CountUp from './components/CountUp';
@@ -163,6 +164,14 @@ const App = () => {
     {
       featured: true,
       mark: "HDC",
+      shot: "/proof/hdc-analytics.jpg",
+      thumbs: ["rZEyxn1wi-0", "NZhFjot4f60", "sk6ca6IlQ6I", "-_tKbNk7QWs"],
+      video: "rZEyxn1wi-0",
+      detail: {
+        challenge: "Hearing aids are a considered, often emotional purchase. Buyers research for weeks, and HearDirectClub needed to be the trusted voice while they did, not just another ad.",
+        built: ["Education-first channel answering the exact questions buyers search", "Long-form explainers plus a Shorts system for reach", "One pipeline feeding organic videos and ad creative", "Weekly reporting on leading indicators"],
+        outcome: ["77.9K organic views", "1.9K hours of watch time", "+168 subscribers", "Client feedback: results better than expected"]
+      },
       category: "Hearing Tech · Ecommerce",
       title: "HDC: A Full YouTube Engine for a Hearing Tech Brand",
       role: "Strategy · Scripts · Production · Publishing · Attribution",
@@ -170,10 +179,17 @@ const App = () => {
       results: ["Education-first channel for a considered health purchase", "One pipeline feeding organic content and ad creative", "Weekly reporting on leading indicators and coded sales"],
       link: "https://heardirectclub.com/products/nova",
       tags: ["Ecommerce", "Health Tech", "Attribution"],
-      metric: { value: "360°", label: "Revenue engine" }
+      metric: { value: "77.9K", label: "Organic views · 1.9K watch hours" }
     },
     {
       mark: "SCIATIEASE",
+      thumbs: ["NfyIRolMxOY", "5txKw9_Qv78", "0pRp5mYONGc", "YzShuWB0Ipk"],
+      video: "NfyIRolMxOY",
+      detail: {
+        challenge: "A health product sold on Amazon and DTC needed video that turns cold traffic into buyers, at a cost per sale that keeps paid ads profitable.",
+        built: ["Long-form VSLs on a direct-response structure: hook, problem, proof, offer", "Short vertical VSLs and ad cuts from the same pipeline", "Motion graphics, captions, b-roll and sound design for every version"],
+        outcome: ["Brand scaled to $5.5M in annual revenue", "5x improvement in ad ROI", "Conversion video feeding both paid and organic"]
+      },
       category: "Health & Recovery · Ecommerce",
       title: "A $5.5M Health Brand Built on Conversion Video",
       role: "VSL + Ad Creative Engine",
@@ -184,17 +200,32 @@ const App = () => {
     },
     {
       mark: "ZENTI",
+      shot: "/proof/zenti-analytics.jpg",
+      thumbs: ["nWvDvRGxbyk", "iHUEVRLSbUE", "8WPZv7iKMqk", "G_hX2oFnQS4"],
+      video: "nWvDvRGxbyk",
+      detail: {
+        challenge: "Payments software is hard to explain and easy to ignore. Zenti needed content that made a dry, complex product worth watching for business owners and partners.",
+        built: ["Profit from Payments, a payments-education channel", "Long-form explainers plus a short-form distribution system across platforms", "A fully remote production pipeline, 11 months running"],
+        outcome: ["22K+ organic views on education content", "Top Shorts reaching 1,000 to 1,500 views each", "An 11-month engagement with a 5.0 client rating"]
+      },
       category: "Fintech",
       title: "Zenti: Making Payments Content Worth Watching",
       role: "Content Engine + Short-Form System",
       results: ["Complex payments product translated for camera", "Short-form distribution system across platforms", "Fully remote production pipeline"],
       link: "https://zenti.com/",
       tags: ["Fintech", "B2B", "Shorts"],
-      metric: { value: "B2B", label: "Fintech made watchable" }
+      metric: { value: "22.4K", label: "Organic views · fintech made watchable" }
     },
     {
       featured: true,
       mark: "SALESFORGE",
+      thumbs: ["68tKi1QjSBQ", "OC3OZpGIxew"],
+      video: "68tKi1QjSBQ",
+      detail: {
+        challenge: "Salesforge, a YC-backed AI sales platform, sells a complex product into a crowded market. Features alone don't win attention on YouTube.",
+        built: ["Story-led videos for the official channel that teach outbound sales, not just the product", "A scalable faceless production pipeline", "Complex AI features turned into simple, watchable explanations"],
+        outcome: ["An always-on content pipeline for the official channel", "Stronger inbound authority in the AI sales category"]
+      },
       category: "B2B SaaS",
       title: "Salesforge: Complex AI Turned Into Inbound Pipeline",
       role: "Faceless Content Engine",
@@ -206,6 +237,13 @@ const App = () => {
     {
       featured: true,
       mark: "TUNA",
+      thumbs: ["ukcyNGGO8uY", "UALcJDQyqOQ", "gVTPybaN1ro"],
+      video: "ukcyNGGO8uY",
+      detail: {
+        challenge: "Build a faceless channel for an automotive brand that earns attention in one of YouTube's most crowded niches, without anyone on camera.",
+        built: ["Story-led scripts built for retention", "Cinematic faceless production: archival footage, motion graphics, voiceover pacing", "Titles and thumbnails tested for click-through"],
+        outcome: ["56M organic views", "136K+ subscribers", "$333K+ in channel revenue"]
+      },
       category: "Automotive · Faceless Channel",
       title: "Tuna No Crust: A Faceless Channel Worth $333K+",
       role: "Faceless Storytelling Engine",
@@ -216,6 +254,13 @@ const App = () => {
     },
     {
       mark: "LAW",
+      thumbs: ["cOgay6dZ0NM", "QE_fv6B0n8I", "P9FE53dt3ow", "kGFSvckEFH8"],
+      video: "cOgay6dZ0NM",
+      detail: {
+        challenge: "Attorneys and tax advisors know their subject but have no time to make content. Their clients search YouTube with real questions before they call anyone.",
+        built: ["Search-led topics on estate planning, probate, guardianship and R&D tax credits", "The attorney records or sends talking points. We handle editing, motion graphics, captions, thumbnails, SEO and publishing", "A consistent house style and a dependable weekly pipeline"],
+        outcome: ["500+ explainer videos produced", "A searchable library that answers client questions around the clock"]
+      },
       category: "Law & Tax Firms · Professional Services",
       title: "Expert Explainer Channels That Bring In Consultations",
       role: "Brenton C. McWilliams Law · R&D Tax Advisors",
@@ -294,13 +339,40 @@ const App = () => {
   ];
 
 
-  const workSamples = [
-    { id: '68tKi1QjSBQ', title: 'This AI Will Replace All Sales Agencies', label: 'B2B SaaS · Salesforge' },
-    { id: 'QE_fv6B0n8I', title: 'Can Someone You Disinherited Fight Back? [Lawyer Explains]', label: 'Law firm · Brenton C. McWilliams' },
-    { id: 'kGFSvckEFH8', title: 'Is the R&D Tax Credit Still Worth It for a $0 Revenue Startup?', label: 'Tax advisory · R&D Tax Advisors' },
-    { id: '9aI0OzNuIKY', title: 'The 6 Worst Wingsuit Pilot Accidents In History', label: 'Faceless documentary · Extreme Edge' },
-    { id: 'NfyIRolMxOY', title: 'SCE Prime VSL', label: 'Conversion video · VSL' },
-    { id: 'rgCPBWBptWM', title: 'Faceless Documentary Animation', label: 'Motion graphics · Faceless' },
+  const sampleTabs: { label: string; videos: { id: string; title: string; label: string }[] }[] = [
+    { label: 'Featured', videos: [
+      { id: 'ukcyNGGO8uY', title: 'Why Car Brands Are Quietly Threatening YouTubers', label: 'Faceless channel · Tuna No Crust · 56M views' },
+      { id: '87XQIwoZ6pg', title: 'Money Ball: Levi vs Eric', label: 'Creator · Lively Lewis Show · 6M+ subs' },
+      { id: '68tKi1QjSBQ', title: 'This AI Will Replace All Sales Agencies', label: 'B2B SaaS · Salesforge' },
+      { id: 'cOgay6dZ0NM', title: 'Alabama’s Hidden 90-Day Trust Rule', label: 'Law firm · Brenton C. McWilliams' },
+      { id: 'rZEyxn1wi-0', title: 'How Much Do Hearing Aids Cost in 2026?', label: 'DTC health · HearDirectClub' },
+      { id: 'nWvDvRGxbyk', title: 'The Easiest Way to Start Earning in Payments', label: 'Fintech · Zenti / Profit from Payments' },
+    ]},
+    { label: 'B2B & SaaS', videos: [
+      { id: '68tKi1QjSBQ', title: 'This AI Will Replace All Sales Agencies', label: 'B2B SaaS · Salesforge' },
+      { id: 'OC3OZpGIxew', title: 'What I Learned From Sending 10,000 Terrible Cold Emails', label: 'B2B SaaS · Salesforge' },
+      { id: 'nWvDvRGxbyk', title: 'The Easiest Way to Start Earning in Payments', label: 'Fintech · Zenti / Profit from Payments' },
+    ]},
+    { label: 'Law & Finance', videos: [
+      { id: 'cOgay6dZ0NM', title: 'Alabama’s Hidden 90-Day Trust Rule', label: 'Law firm · Brenton C. McWilliams' },
+      { id: 'QE_fv6B0n8I', title: 'Can Someone You Disinherited Fight Back?', label: 'Law firm · Brenton C. McWilliams' },
+      { id: 'P9FE53dt3ow', title: 'The Tax Deadline Myth That Could Cost Founders Thousands', label: 'Tax advisory · R&D Tax Advisors' },
+    ]},
+    { label: 'Creators & Personal Brands', videos: [
+      { id: '87XQIwoZ6pg', title: 'Money Ball: Levi vs Eric', label: 'Creator · Lively Lewis Show · 6M+ subs' },
+      { id: '1-4xo4G2PQw', title: 'What Really Happens When I Take My Family to Costco', label: 'Creator · Heather McDonald' },
+      { id: 'tbswXCkh6ug', title: 'The Dating Expert: “I’ve Helped 4,000 Men Find Love”', label: 'Podcast · The Passionate Few · 326K subs' },
+    ]},
+    { label: 'DTC & Health', videos: [
+      { id: 'rZEyxn1wi-0', title: 'How Much Do Hearing Aids Cost in 2026?', label: 'DTC health · HearDirectClub' },
+      { id: 'NZhFjot4f60', title: 'Does Medicare Cover Hearing Aids? The Honest Answer', label: 'DTC health · HearDirectClub' },
+      { id: 'NfyIRolMxOY', title: 'SciatiEase Conversion VSL', label: 'VSL · SciatiEase · $5.5M brand' },
+    ]},
+    { label: 'Faceless & Documentary', videos: [
+      { id: 'ukcyNGGO8uY', title: 'Why Car Brands Are Quietly Threatening YouTubers', label: 'Faceless channel · Tuna No Crust' },
+      { id: '2UuGgPNM1KM', title: 'The Dark Story of Australia’s Legendary Rock Band', label: 'Music documentary · Battle For Melody' },
+      { id: '9aI0OzNuIKY', title: 'The 6 Worst Wingsuit Pilot Accidents In History', label: 'Documentary · Extreme Edge Stories' },
+    ]},
   ];
 
   const videoTestimonials = [
@@ -349,6 +421,8 @@ const App = () => {
   ];
 
   const [openFaq, setOpenFaq] = useState<number | null>(0);
+  const [sampleTab, setSampleTab] = useState(0);
+  const [openCase, setOpenCase] = useState<number | null>(null);
   const [showAllReviews, setShowAllReviews] = useState(false);
 
   if (loading) {
@@ -568,12 +642,19 @@ const App = () => {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {caseStudies.map((project, index) => (
               <Reveal key={index} delay={index * 120} variant="fade-up" className={project.featured ? 'md:col-span-2' : ''}>
-                <ProjectCard {...project} isDark={isDark} />
+                <ProjectCard {...project} isDark={isDark} onOpen={() => setOpenCase(index)} />
               </Reveal>
             ))}
           </div>
         </div>
       </section>
+
+      <CaseStudyModal
+        study={openCase === null ? null : caseStudies[openCase]}
+        isDark={isDark}
+        onClose={() => setOpenCase(null)}
+        onCta={() => { setOpenCase(null); setTimeout(() => scrollToSection('contact'), 50); }}
+      />
 
       {/* SEE THE WORK */}
       <section id="samples" className={`py-24 relative overflow-hidden ${isDark ? 'bg-black' : 'bg-white'}`}>
@@ -589,8 +670,22 @@ const App = () => {
               <p className={theme.textMuted}>Complex products, legal questions and big stories, made worth watching. Press play on any of them.</p>
             </div>
           </Reveal>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-10 max-w-6xl mx-auto">
-            {workSamples.map((v, i) => (
+          <div className="flex flex-wrap justify-center gap-2 mb-10" role="tablist" aria-label="Work samples by industry">
+            {sampleTabs.map((t, i) => (
+              <button
+                key={t.label}
+                type="button"
+                role="tab"
+                aria-selected={sampleTab === i}
+                onClick={() => setSampleTab(i)}
+                className={`px-4 py-2 rounded-full border text-xs font-semibold tracking-wide transition-all duration-300 ${sampleTab === i ? 'bg-blue-600 border-blue-600 text-white' : isDark ? 'border-white/15 text-neutral-300 hover:border-white/40' : 'border-black/15 text-neutral-700 hover:border-black/40'}`}
+              >
+                {t.label}
+              </button>
+            ))}
+          </div>
+          <div key={sampleTab} className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-10 max-w-6xl mx-auto">
+            {sampleTabs[sampleTab].videos.map((v, i) => (
               <Reveal key={v.id} delay={(i % 3) * 100} variant="fade-up">
                 <VideoTile videoId={v.id} title={v.title} label={v.label} isDark={isDark} />
               </Reveal>
