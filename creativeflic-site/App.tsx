@@ -31,7 +31,8 @@ import {
   Star,
   ChevronDown,
   Phone,
-  Mic
+  Mic,
+  Calendar
 } from 'lucide-react';
 import Preloader from './components/Preloader';
 import SectionParticles from './components/Particles';
@@ -42,6 +43,8 @@ import Reveal from './components/Reveal';
 import ProjectCard from './components/ProjectCard';
 import CaseStudyModal from './components/CaseStudyModal';
 import { track } from './analytics';
+import { BOOKING_URL } from './config';
+import LawFirmsPage from './components/LawFirmsPage';
 import WordReveal from './components/WordReveal';
 import WorkDemo from './components/WorkDemo';
 import CountUp from './components/CountUp';
@@ -420,14 +423,14 @@ const App = () => {
 
   const howItWorks = [
     { icon: <Phone size={24} />, who: 'CreativeFlic', title: 'Strategy call', desc: 'We map the first videos your buyers need to see before they buy, and the keywords they search to find them.' },
-    { icon: <Mic size={24} />, who: 'You, with our guidance', title: 'You record, or you don\'t', desc: 'Send talking points or record in one batch session with our scripts and on-camera guidance. Faceless formats need no filming at all.' },
+    { icon: <Mic size={24} />, who: 'You, with our guidance', title: 'You record, about 2–3 hours a week', desc: 'Send talking points or record with our scripts and on-camera guidance. Faceless formats need no filming at all.' },
     { icon: <Rocket size={24} />, who: 'CreativeFlic', title: 'We do the rest', desc: 'Editing, motion graphics, thumbnails, titles, publishing and tracking which videos bring in leads and sales.' },
   ];
 
   const faqs = [
     { q: 'Why YouTube?', a: 'Your buyers research before they buy, and YouTube is where they do it. Unlike paid ads, a video keeps ranking and selling for years, so your cost per customer falls over time instead of rising.' },
     { q: 'Do I need a big audience for this to work?', a: 'No. We build for search and buyer intent, not virality. A small channel that answers the questions your buyers type into YouTube can bring in qualified leads long before it has a big subscriber count.' },
-    { q: 'How much of my time does this take?', a: 'Very little. You approve the plan, then either send talking points or record in one batch session with our scripts. Faceless formats need no filming at all. We handle everything else.' },
+    { q: 'How much of my time does this take?', a: 'About 2–3 hours a week of recording, or none at all for faceless formats. You approve the plan and the scripts. We handle topics, editing, thumbnails, SEO and publishing.' },
     { q: 'Do I need to come up with the content ideas?', a: 'No. We research what your buyers search, plan the topics, and write the scripts. You review and approve.' },
     { q: 'How is this different from hiring a video editor?', a: 'An editor waits for footage and direction. We own the whole loop: strategy, scripts, production, publishing and reporting, so you get a channel that is built to sell, not just edited videos.' },
     { q: 'What results can I expect, and when?', a: 'YouTube compounds, it does not spike. Expect foundation work and your first 8 videos in months 1 to 2, winning formats by month 3, and first leads in months 4 to 6. We never promise view counts. We report the leading indicators weekly so you see progress from day one.' },
@@ -440,6 +443,8 @@ const App = () => {
   const [openCase, setOpenCase] = useState<number | null>(null);
   const [showAllReviews, setShowAllReviews] = useState(false);
 
+  const isLawPage = typeof window !== 'undefined' && window.location.pathname.replace(/\/+$/, '') === '/law-firms';
+
   if (loading) {
     return (
       <div className={`min-h-screen font-sans ${theme.bg}`}>
@@ -447,6 +452,8 @@ const App = () => {
       </div>
     );
   }
+
+  if (isLawPage) return <LawFirmsPage />;
 
   return (
     <div className={`min-h-screen font-sans selection:bg-blue-600 selection:text-white overflow-x-hidden transition-colors duration-500 ${theme.bg} ${theme.text}`}>
@@ -598,6 +605,11 @@ const App = () => {
                   Get Your Free Revenue Audit
                   <ArrowRight size={17} className="group-hover:translate-x-1 transition-transform" />
                 </button>
+                {BOOKING_URL && (
+                  <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" onClick={() => track('book_call_click', { page: 'home' })} className={`px-9 py-4 rounded-full border transition-all duration-300 font-semibold tracking-wide inline-flex items-center gap-2 ${isDark ? 'border-white/15 hover:border-white/40 text-neutral-300 hover:text-white' : 'border-black/15 hover:border-black/40 text-neutral-700 hover:text-black'}`}>
+                    <Calendar size={17} /> Book a Call
+                  </a>
+                )}
                 <button onClick={() => scrollToSection('work')} className={`px-9 py-4 rounded-full border transition-all duration-300 font-semibold tracking-wide active:scale-95 ${isDark ? 'border-white/15 hover:border-white/40 text-neutral-300 hover:text-white' : 'border-black/15 hover:border-black/40 text-neutral-700 hover:text-black'}`}>
                   See The Results
                 </button>
@@ -1121,6 +1133,9 @@ const App = () => {
                   <button onClick={() => scrollToSection('contact')} className={`btn-sheen inline-flex items-center gap-2 px-7 py-3 ${brandBlue} text-white font-bold rounded-full hover:bg-blue-500 transition-all duration-300 text-sm tracking-wide`}>
                     Get Your Free Channel Audit <ArrowRight size={16} />
                   </button>
+                  <a href="/law-firms/" className={`ml-4 inline-flex items-center gap-1.5 text-sm font-semibold ${accentText} hover:underline underline-offset-4`}>
+                    See how it works for law firms <ArrowRight size={14} />
+                  </a>
                 </div>
               </div>
             </div>
@@ -1205,6 +1220,11 @@ const App = () => {
         <div className="container mx-auto px-6 relative z-10">
           <Reveal variant="fade-up">
             <ContactForm brandBlue={brandBlue} onSuccess={handleSuccess} isDark={isDark} />
+            {BOOKING_URL && (
+              <p className={`text-center mt-8 text-sm ${theme.textMuted}`}>
+                Prefer to talk? <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" onClick={() => track('book_call_click', { page: 'home' })} className={`font-semibold hover:underline ${accentText}`}>Book a 20-minute call</a>
+              </p>
+            )}
           </Reveal>
         </div>
       </section>
